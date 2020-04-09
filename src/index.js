@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import './index.css'
 import * as serviceWorker from './serviceWorker'
-import Home from '@/views/home'
+import LayoutCommon from '@/layouts/common'
 
 function About() {
   return <h2>About</h2>
@@ -14,7 +14,7 @@ ReactDOM.render(
     <Router>
       <Switch>
         <Route path="/">
-          <Home />
+          <LayoutCommon />
         </Route>
         <Route path="/about">
           <About />
