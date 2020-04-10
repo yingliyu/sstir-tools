@@ -1,3 +1,5 @@
 import RouterCommon from './modules/common'
+import RouterSearch from './modules/search'
 
-export { RouterCommon }
+const RouterArr = [...RouterCommon, ...RouterSearch]
+export default RouterArr

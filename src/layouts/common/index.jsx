@@ -12,7 +12,9 @@ export default function LayoutCommon(props) {
       <Header>
         <CommonHeader />
       </Header>
-      <Content>{props.children}</Content>
+      <Content>
+        <div className={css['main-inner']}>{props.children}</div>
+      </Content>
       <Footer>
         <CommonFooter />
       </Footer>

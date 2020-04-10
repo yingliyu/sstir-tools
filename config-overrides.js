@@ -26,7 +26,7 @@ module.exports = override(
     javascriptEnabled: true,
     modules: true,
     noIeCompat: true,
-    modifyVars: { '@primary-color': '#aaa' }
+    modifyVars: { '@primary-color': '#2181ea' }
   }),
   // 配置路径别名
   addWebpackAlias({

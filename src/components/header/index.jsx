@@ -10,7 +10,7 @@ export default function Head() {
         <a href="http://www.sstir.cn" target="_blank">
           数据中心首页
         </a>
-        <Divider type="vertical" />
+        <Divider type="vertical" style={{ color: '#999' }} />
         <a href="http://www.sstir.cn/register" target="_blank">
           注册
         </a>
