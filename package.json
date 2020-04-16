@@ -4,6 +4,7 @@
   "private": true,
   "token": "react_tools_token",
   "dependencies": {
+    "@antv/g6": "^3.4.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -23,7 +24,8 @@
     "react-dom": "^16.13.1",
     "react-loadable": "^5.5.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "viser-react": "^2.4.8"
   },
   "scripts": {
     "start": "react-app-rewired start",

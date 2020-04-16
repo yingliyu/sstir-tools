@@ -4,16 +4,24 @@ const { REACT_APP_URL_TYPE, REACT_APP_AUTH_TOKEN } = env
 const getUrl = () => {
   switch (REACT_APP_URL_TYPE) {
     case 'dev':
-      return '1'
+      return {
+        baseUrl: 'http://rap2.taobao.org:38080/app/mock/250859/'
+      }
     case 'qa':
-      return '2'
+      return {
+        baseUrl: 'http://rap2.taobao.org:38080/app/mock/250859/'
+      }
     case 'prod':
-      return '3'
+      return {
+        baseUrl: 'http://rap2.taobao.org:38080/app/mock/250859/'
+      }
     default:
-      return '4'
+      return {
+        baseUrl: 'http://rap2.taobao.org:38080/app/mock/250859/'
+      }
   }
 }
 export default {
   token: REACT_APP_AUTH_TOKEN,
-  baseUrl: getUrl()
+  baseUrl: getUrl(REACT_APP_URL_TYPE)
 }

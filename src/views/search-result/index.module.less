@@ -3,17 +3,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  .banner-wrapper {
-    width: 100%;
-    height: 365px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #53a7f7;
-    h2 {
-      color: #fff;
-    }
-  }
+
   .search-main-wrapper {
     width: 835px;
     display: flex;
@@ -26,17 +16,7 @@
       text-align: center;
       font-weight: 600;
     }
-    .field-wrapper {
-      padding: 21px 0 45px;
-      .field-label {
-        display: inline-block;
-        width: 100px;
-      }
-      button {
-        border: 1px solid #53a7f7;
-        color: #53a7f7;
-      }
-    }
+
     .tab-wrapper {
       width: 100%;
       .report-item {
@@ -50,6 +30,25 @@
         font-weight: 700;
         color: #90c0f4;
         cursor: pointer;
+      }
+      :global .ant-tabs-nav .ant-tabs-tab-active {
+        position: relative;
+        // &:after {
+        //   width: 0;
+        //   height: 0;
+        //   display: inline-block;
+        //   content: '';
+        //   border: 5px solid transparent;
+        //   border-bottom: 5px solid #2181ea;
+        //   position: absolute;
+        //   bottom: 2px;
+        //   left: 50%;
+        //   transform: translateX(-50%);
+        // }
+      }
+      :global .ant-tabs-content {
+        min-height: 300px;
+        padding-bottom: 50px;
       }
     }
   }

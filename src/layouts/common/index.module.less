@@ -10,13 +10,38 @@
   }
   main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     background-color: #eff3f7;
+    .banner-wrapper {
+      width: 1200px;
+      height: 365px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: url(./img/banner.png);
+      background-size: 100% 100%;
+      h2,
+      p {
+        color: #fff;
+        padding-bottom: 15px;
+      }
+    }
     .main-inner {
       width: 1200px;
       display: flex;
       justify-content: center;
       background-color: #fff;
+      .inner-container {
+        width: 835px;
+        display: flex;
+        justify-content: center;
+        :global .ant-spin-spinning {
+          padding: 20px;
+        }
+      }
     }
   }
   footer {
