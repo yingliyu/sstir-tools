@@ -1,6 +1,7 @@
 import React from 'react'
 import css from './index.module.less'
 export default function SearchDetail() {
+  // const list = []
   return (
     <div className={css['search-detail-wrapper']}>
       <h2>CARD9的巨噬细胞极化效应在慢性胰腺炎癌转化中的作用机制研究</h2>

@@ -15,8 +15,8 @@ const data = [
 
 const scale = [
   {
-    dataKey: 'value'
-    // min: 10000
+    dataKey: 'value',
+    min: 10000
   },
   {
     dataKey: 'year',
@@ -25,20 +25,34 @@ const scale = [
   }
 ]
 
-export default class ReportArea extends React.Component {
+export default class App extends React.Component {
   render() {
     const crosshairs = {
       type: 'y',
       style: {}
     }
-
+    const pointStyle = {
+      stroke: '#ed7b5a',
+      fill: '#fff',
+      lineWidth: 1,
+      fillOpacity: 1
+    }
+    const color = 'l(90) 0:#eb623d 0.5:#f09a7f 1:#fae1da'
     return (
-      <Chart forceFit height={400} data={data} scale={scale} renderer="svg">
+      <Chart
+        width={835}
+        height={400}
+        data={data}
+        scale={scale}
+        renderer="svg"
+        plotBackground="green"
+        background="pink"
+      >
         <Tooltip crosshairs={crosshairs} />
         <Axis dataKey="value" />
-        <Line position="year*value" size={2} />
-        <Area position="year*value" />
-        <Point position="year*value" shape="circle" />
+        <Line position="year*value" size={2} color="#ed7b5a" shape="smooth" />
+        <Area position="year*value" color={color} shape="smooth" />
+        <Point position="year*value" size={3} style={pointStyle} shape="circle" />
       </Chart>
     )
   }

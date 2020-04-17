@@ -1,4 +1,4 @@
-import { Chart, Tooltip, Axis, Bar, SmoothLine, Point, Legend } from 'viser-react'
+import { Chart, Tooltip, Axis, Bar, Line, Point } from 'viser-react'
 import * as React from 'react'
 
 const data = [
@@ -29,13 +29,13 @@ const scale = [
 export default class App extends React.Component {
   render() {
     return (
-      <Chart forceFit height={400} data={data} scale={scale}>
+      <Chart width={835} height={400} data={data} scale={scale} renderer="svg">
         <Tooltip />
-        <Legend
+        {/* <Legend
           custom
           allowAllCanceled
           items={[
-            { value: 'waiting', marker: { symbol: 'square', fill: '#3182bd', radius: 5 } },
+            { value: 'waiting', marker: { symbol: 'square', fill: '#1890ff', radius: 5 } },
             {
               value: 'people',
               marker: { symbol: 'hyphen', stroke: '#fdae6b', radius: 5, lineWidth: 3 }
@@ -57,7 +57,7 @@ export default class App extends React.Component {
               }
             }
           }}
-        />
+        /> */}
         <Axis
           dataKey="people"
           grid={null}
@@ -67,9 +67,10 @@ export default class App extends React.Component {
             }
           }}
         />
-        <Bar position="time*waiting" color="#3182bd" />
-        <SmoothLine position="time*people" color="#fdae6b" size={3} />
-        <Point shape="circle" position="time*people" color="#fdae6b" size={3} />
+
+        <Bar position="time*waiting" color="#bf1a1a" />
+        <Line position="time*people" color="#555" size={1} />
+        <Point shape="circle" position="time*people" color="#555" size={2} />
       </Chart>
     )
   }

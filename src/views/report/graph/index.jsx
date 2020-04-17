@@ -25,7 +25,7 @@ export default function Graph() {
           return 60
         },
         nodeSize: (d) => {
-          console.log(d)
+          // console.log(d)
           return d.size - 10
         },
         nodeStrength: (d) => {
@@ -57,23 +57,23 @@ export default function Graph() {
 
     const data = {
       nodes: [
-        { id: 'node0', size: 100 },
-        { id: 'node1', size: 65 },
-        { id: 'node2', size: 80 },
-        { id: 'node3', size: 60 },
-        { id: 'node4', size: 70, isLeaf: true },
-        { id: 'node5', size: 80, isLeaf: true },
-        { id: 'node6', size: 65, isLeaf: true },
-        { id: 'node7', size: 60, isLeaf: true },
-        { id: 'node8', size: 55, isLeaf: true },
-        { id: 'node9', size: 70, isLeaf: true },
-        { id: 'node10', size: 85, isLeaf: true },
-        { id: 'node11', size: 80, isLeaf: true },
-        { id: 'node12', size: 65, isLeaf: true },
-        { id: 'node13', size: 65, isLeaf: true },
-        { id: 'node14', size: 60, isLeaf: true },
-        { id: 'node15', size: 55, isLeaf: true },
-        { id: 'node16', size: 55, isLeaf: true }
+        { id: 'node0', size: 100, label: '李飞飞' },
+        { id: 'node1', size: 65, label: 'lemon' },
+        { id: 'node2', size: 80, label: 'lemon' },
+        { id: 'node3', size: 60, label: 'lemon' },
+        { id: 'node4', size: 70, isLeaf: true, label: 'lemon' },
+        { id: 'node5', size: 80, isLeaf: true, label: 'lemon' },
+        { id: 'node6', size: 65, isLeaf: true, label: 'lemon' },
+        { id: 'node7', size: 60, isLeaf: true, label: 'lemon' },
+        { id: 'node8', size: 55, isLeaf: true, label: 'lemon' },
+        { id: 'node9', size: 70, isLeaf: true, label: 'lemon' },
+        { id: 'node10', size: 85, isLeaf: true, label: 'lemon' },
+        { id: 'node11', size: 80, isLeaf: true, label: 'lemon' },
+        { id: 'node12', size: 65, isLeaf: true, label: 'lemon' },
+        { id: 'node13', size: 65, isLeaf: true, label: 'lemon' },
+        { id: 'node14', size: 60, isLeaf: true, label: 'lemon' },
+        { id: 'node15', size: 55, isLeaf: true, label: 'lemon' },
+        { id: 'node16', size: 55, isLeaf: true, label: 'lemon' }
       ],
       edges: [
         { source: 'node0', target: 'node1' },
@@ -94,6 +94,30 @@ export default function Graph() {
         { source: 'node0', target: 'node16' }
       ]
     }
+    // const colors = [
+    //   '#BDD2FD',
+    //   '#BDEFDB',
+    //   '#C2C8D5',
+    //   '#FBE5A2',
+    //   '#F6C3B7',
+    //   '#B6E3F5',
+    //   '#D3C6EA',
+    //   '#FFD8B8',
+    //   '#AAD8D8',
+    //   '#FFD6E7'
+    // ]
+    // const strokes = [
+    //   '#5B8FF9',
+    //   '#5AD8A6',
+    //   '#5D7092',
+    //   '#F6BD16',
+    //   '#E8684A',
+    //   '#6DC8EC',
+    //   '#9270CA',
+    //   '#FF9D4D',
+    //   '#269A99',
+    //   '#FF99C3'
+    // ]
     const nodes = data.nodes
     graph.data({
       nodes,

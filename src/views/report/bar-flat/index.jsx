@@ -5,43 +5,53 @@ import * as React from 'react'
 const data = [
   {
     type: '汽车',
-    value: 34
+    value: 34,
+    colorType: '1'
   },
   {
     type: '建材家居',
-    value: 85
+    value: 85,
+    colorType: '2'
   },
   {
     type: '住宿旅游',
-    value: 103
+    value: 103,
+    colorType: '1'
   },
   {
     type: '交通运输与仓储邮政',
-    value: 142
+    value: 142,
+    colorType: '2'
   },
   {
     type: '建筑房地产',
-    value: 251
+    value: 251,
+    colorType: '1'
   },
   {
     type: '教育',
-    value: 367
+    value: 367,
+    colorType: '2'
   },
   {
     type: 'IT 通讯电子',
-    value: 491
+    value: 491,
+    colorType: '1'
   },
   {
     type: '社会公共管理',
-    value: 672
+    value: 672,
+    colorType: '2'
   },
   {
     type: '医疗卫生',
-    value: 868
+    value: 868,
+    colorType: '1'
   },
   {
     type: '金融保险',
-    value: 1234
+    value: 1234,
+    colorType: '2'
   }
 ]
 const scale = [
@@ -49,14 +59,16 @@ const scale = [
     dataKey: 'value',
     max: 1300,
     min: 0,
-    nice: false,
-    alias: '销量（百万）'
+    nice: false
+    // alias: '销量（百万）'
   }
 ]
 const label = {
+  offset: -710,
   textStyle: {
     fill: '#8d8d8d',
-    fontSize: 12
+    fontSize: 12,
+    textAlign: 'right'
   }
 }
 const tickLine = {
@@ -68,13 +80,13 @@ const line = {
   lineWidth: 0
 }
 
-const title = {
-  offset: 30,
-  textStyle: {
-    fontSize: 12,
-    fontWeight: 300
-  }
-}
+// const title = {
+//   offset: 30,
+//   textStyle: {
+//     fontSize: 12,
+//     fontWeight: 300
+//   }
+// }
 const barLabel = [
   'value',
   {
@@ -149,13 +161,36 @@ export default class App extends React.Component {
   render() {
     const sortType = this.state.sortType
     const trueData = this.sortData(sortType, data)
+    // const color = [
+    //   'l(180) 0:#ec6945 0.5:#f2ae99 1:#fae1da',
+    //   'l(180) 0:#52b7d1 0.5:#f2ae99 1:#cae8f0'
+    // ]
+    // const color1 = 'l(180) 0:#ec6945 0.5:#f2ae99 1:#fae1da' // 橙色系
+    // const color2 = 'l(180) 0:#52b7d1 0.5:#f2ae99 1:#cae8f0' // 蓝色系
+
     return (
-      <Chart forceFit data={trueData} height={400} padding={[20, 40, 50, 124]} scale={scale}>
+      <Chart
+        data={trueData}
+        width={835}
+        height={400}
+        padding={[20, 200, 50, 40]}
+        scale={scale}
+        renderer="svg"
+      >
         <Tooltip />
         <Axis dataKey="type" label={label} tickLine={tickLine} line={line} />
-        <Axis dataKey="value" label={null} title={title} />
+        <Axis dataKey="value" label={null} title={null} />
         <Coord type="rect" direction="LB" />
-        <Interval position="type*value" size="26" opacity={1} label={barLabel} />
+        <Interval
+          position="type*value"
+          size="26"
+          opacity={1}
+          label={barLabel}
+          color={[
+            'colorType',
+            ['l(180) 0:#ec6945 0.5:#ee7f5e 1:#fae1da', 'l(180) 0:#52b7d1 0.5:#6ec8db 1:#c5e7ef']
+          ]}
+        />
       </Chart>
     )
   }
