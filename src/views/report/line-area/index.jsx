@@ -42,6 +42,7 @@ export default class App extends React.Component {
       <Chart
         width={835}
         height={400}
+        title="历年发文量"
         data={data}
         scale={scale}
         renderer="svg"

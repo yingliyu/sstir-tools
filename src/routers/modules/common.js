@@ -8,6 +8,10 @@ const NotFound = Loadable({
   loader: () => import('@/views/error-pages/not-found'),
   loading: Loading
 })
+const Demo = Loadable({
+  loader: () => import('@/views/demo'),
+  loading: Loading
+})
 
 const routerCommon = [
   {
@@ -18,6 +22,10 @@ const routerCommon = [
   {
     path: '/404',
     component: NotFound
+  },
+  {
+    path: '/demo',
+    component: Demo
   }
 ]
 export default routerCommon

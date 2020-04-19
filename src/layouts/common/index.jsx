@@ -5,8 +5,6 @@ import { Layout } from 'antd'
 const { Header, Footer, Content } = Layout
 import css from './index.module.less'
 export default function LayoutCommon(props) {
-  console.log(props)
-
   return (
     <div className={css['layout-wrapper']}>
       <Header>

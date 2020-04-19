@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import './index.css'
+import css from './index.module.less'
 import * as serviceWorker from './serviceWorker'
 import LayoutCommon from '@/layouts/common'
 import RouterArr from '@/routers'
@@ -10,7 +10,7 @@ function About() {
 }
 
 ReactDOM.render(
-  <div>
+  <div className={css['app-wrapper']}>
     <Router>
       <Switch>
         <Route

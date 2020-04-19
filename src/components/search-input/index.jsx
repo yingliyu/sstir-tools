@@ -25,7 +25,7 @@ export default function SearchInput() {
   return (
     <div className={css['search-input-wrapper']}>
       <Form name="search">
-        <Form.Item label="科研选题：" name="searchKey">
+        <Form.Item label="科研选题：">
           <Search
             placeholder="请输入检索词，简短的检索词可以找到更多信息"
             enterButton="搜索"

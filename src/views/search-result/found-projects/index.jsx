@@ -15,7 +15,7 @@ export default function FoundProjects() {
         leader: '吴艳红',
         leader_title: '副研究员',
         unit: '中国科学院对地观测与数字地球科学中心',
-        project_money: 20,
+        project_money: 2230,
         project_type: '青年科学基金项目',
         exec_date: '2010年01月01日至2012年12月31日',
         appro_year: 2009,
@@ -220,19 +220,19 @@ export default function FoundProjects() {
         renderItem={(item) => (
           <List.Item>
             <List.Item.Meta
-              title={<a href="https://ant.design">{item.title}</a>}
+              title={<a href="https://ant.design">{item.source.title}</a>}
               description={
                 <div className={css['list-item-desc']}>
-                  <div>
-                    <span>负责人：钟晓明</span>
-                    <span>申请单位：xxx</span>
-                    <span>研究类型：xxx</span>
-                    <span>项目批准号：xxx</span>
+                  <div className={css['item-top-wrapper']}>
+                    <span>负责人：{item.source.leader}</span>
+                    <span className={css['unit-wrapper']}>申请单位：{item.source.unit}</span>
+                    <span>研究类型：{item.source.project_type}</span>
+                    <span>项目批准号：{item.source.pid}</span>
                   </div>
                   <div>
-                    <span>批准年度：212</span>
-                    <span>金额：1212万</span>
-                    <span>关键词：xxxxxxx</span>
+                    <span>批准年度：{item.source.appro_year}</span>
+                    <span>金额：{item.source.project_money}万</span>
+                    <span>关键词：{item.source.keywords.map((item) => item + '；')}</span>
                   </div>
                 </div>
               }
