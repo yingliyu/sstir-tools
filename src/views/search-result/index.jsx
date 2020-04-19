@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Tabs } from 'antd'
+import { Button, Tabs, Row, Col } from 'antd'
 const { TabPane } = Tabs
 import css from './index.module.less'
 import SearchInput from '@/components/search-input'
 import ResearchAreas from '@/components/research-areas'
 import FoundProjects from './found-projects'
 import ReportHeader from './report-header'
-import ReportThumb from './report-thumb'
+// import ReportThumb from './report-thumb'
 import SearchTrend from '@/views/report/line-area'
 import HighAuthor from '@/views/report/graph'
 import HighOrg from '@/views/report/bar-flat'
 import ProjectTrend from '@/views/report/bar-line'
-import { BrowserRouter as Router, useLocation } from 'react-router-dom'
+import { BrowserRouter as Router, useLocation, Link } from 'react-router-dom'
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
@@ -106,7 +106,37 @@ export default function SearchReasult() {
                         </div>
                       )
                     default:
-                      return <ReportThumb queryKey={queryKey} />
+                      // return <ReportThumb queryKey={queryKey} />
+                      return (
+                        <div>
+                          <Row gutter={16}>
+                            <Col className={css['gutter-row']} span={12}>
+                              <Link to={`/search/field?q=${queryKey}&type=1`}>
+                                <div className={css['report-item']}>论文-研究走势</div>
+                              </Link>
+                            </Col>
+
+                            <Col span={12} className={css['gutter-row']}>
+                              <Link to={`/search/field?q=${queryKey}&type=2`}>
+                                <div className={css['report-item']}>论文-高发作者</div>
+                              </Link>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row gutter={16}>
+                            <Col className={css['gutter-row']} span={12}>
+                              <Link to={`/search/field?q=${queryKey}&type=3`}>
+                                <div className={css['report-item']}>论文-高发文机构</div>
+                              </Link>
+                            </Col>
+                            <Col span={12} className={css['gutter-row']}>
+                              <Link to={`/search/field?q=${queryKey}&type=4`}>
+                                <div className={css['report-item']}>科研获批趋势</div>
+                              </Link>
+                            </Col>
+                          </Row>
+                        </div>
+                      )
                   }
                 })()}
               </TabPane>
