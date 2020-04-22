@@ -6,31 +6,15 @@ import Cookies from 'js-cookie'
 import Urls from '@/utils/url-creator'
 
 export default class Head extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { visible: false, token: '', userInfo: {} }
-    this.showModal = this.showModal.bind(this)
-    this.handleOk = this.handleOk.bind(this)
-    this.handleCancel = this.handleCancel.bind(this)
-  }
-
-  componentDidMount() {
-    // 获取用户信息
-    this.setState(() => ({
-      token: Cookies.get('token')
-    }))
-  }
+  state = { visible: false }
 
   showModal() {
-    this.setState((state) => ({
+    this.setState({
       visible: true
-    }))
+    })
   }
 
   handleOk() {
-    this.setState((state) => ({
-      visible: false
-    }))
     // 清token退出登录
     const token = Cookies.get('token')
     if (token) {
@@ -40,9 +24,10 @@ export default class Head extends React.Component {
         Cookies.remove('token')
       }
     }
-    location = '/'
-    // console.log(Urls.casLoginout + encodeURIComponent(Urls.indexUrl))
-    // window.location.href = Urls.casLoginout + encodeURIComponent(Urls.indexUrl)
+    window.location.href = Urls.casLoginout + encodeURIComponent(Urls.indexUrl)
+    this.setState({
+      visible: false
+    })
   }
 
   handleCancel() {
@@ -50,7 +35,6 @@ export default class Head extends React.Component {
       visible: false
     })
   }
-
   render() {
     const menu = (
       <Menu>
@@ -60,11 +44,17 @@ export default class Head extends React.Component {
           </a>
         </Menu.Item>
         <Menu.Item>
-          <span onClick={this.showModal}>退出</span>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            // href="http://www.sstir.cn/user"
+            onClick={this.showModal}
+          >
+            退出
+          </a>
         </Menu.Item>
       </Menu>
     )
-    const { token, userInfo } = this.state
     return (
       <div className={css['header-wrapper']}>
         <img src={logo} />
@@ -73,23 +63,18 @@ export default class Head extends React.Component {
             数据中心首页
           </a>
           <Divider type="vertical" style={{ color: '#999' }} />
-          {token ? (
-            <Dropdown overlay={menu} placement="bottomRight">
-              <Button type="primary">{userInfo.userName}</Button>
-            </Dropdown>
-          ) : (
-            <a href="http://www.sstir.cn/register" target="_blank">
-              登录
-            </a>
-          )}
+          <a href="http://www.sstir.cn/register" target="_blank">
+            登录
+          </a>
+          <Dropdown overlay={menu} placement="bottomRight">
+            <Button type="primary">lemonyu</Button>
+          </Dropdown>
         </Space>
         <Modal
           title="提示"
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
-          cancelText="取消"
-          okText="确定"
         >
           <p>此操作将退出登录，是否继续？</p>
         </Modal>

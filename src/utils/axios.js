@@ -1,23 +1,23 @@
 import axios from 'axios'
-import appConfig from '@/config'
+import config from '@/config'
 
-console.log(appConfig)
+console.log(config.appConfig.baseUrl)
 
 // create axios instance
 const instance = axios.create({
-  baseURL: appConfig.baseUrl,
+  baseURL: config.appConfig.baseUrl,
   timeout: 1000 * 60 * 10 // 10 min
 })
 
-const Loading = document.querySelector('#loadingWrapper')
+// const Loading = document.querySelector('#loadingWrapper')
 
-const showLoading = () => {
-  Loading.style.display = ''
-}
+// const showLoading = () => {
+//   Loading.style.display = ''
+// }
 
-const closeLoading = () => {
-  Loading.style.display = 'none'
-}
+// const closeLoading = () => {
+//   Loading.style.display = 'none'
+// }
 
 let reqList = []
 
@@ -30,7 +30,7 @@ instance.interceptors.request.use(
     if (!reqList.includes(request)) {
       reqList.push(request)
     }
-    showLoading()
+    // showLoading()
 
     // Do something before request is sent
     // Loading 为单例模式
@@ -53,7 +53,7 @@ instance.interceptors.request.use(
     //   duration: 2000
     // })
     // Loading.service().close()
-    closeLoading()
+    // closeLoading()
     return Promise.reject(error)
   }
 )
@@ -69,7 +69,7 @@ instance.interceptors.response.use(
     // 如果当前已经没有进行中的异步请求了，则关闭loading
     if (reqList.length === 0) {
       // Loading.service().close()
-      showLoading()
+      // showLoading()
     }
 
     // 当响应结果不成功，则报错
@@ -91,7 +91,7 @@ instance.interceptors.response.use(
     reqList.length = 0
     // 关闭loading
     // Loading.service().close()
-    closeLoading()
+    // closeLoading()
 
     // 如果是取消请求的话，则抛出取消请求
     if (axios.isCancel(error)) {

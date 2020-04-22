@@ -1,7 +1,6 @@
 import instance from './axios'
 import { message } from 'antd'
 import qs from 'qs'
-
 export function AppPost(url, data) {
   return new Promise((resolve, reject) => {
     instance
@@ -32,13 +31,15 @@ export function AppGet(url, data) {
         }
       })
       .then((res) => {
-        if (res.data.code === '200') {
+        if (res.data.code === '200' || res.data.code === 200) {
           resolve(res.data.data)
         } else {
           reject(res.data.msg)
         }
       })
       .catch((err) => {
+        console.log(err)
+
         reject(err)
       })
   })

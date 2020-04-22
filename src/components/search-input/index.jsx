@@ -1,40 +1,62 @@
 import React from 'react'
 import { Form, Input } from 'antd'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 const { Search } = Input
 import css from './index.module.less'
-// import { searchApi } from '@/services'
-function searchHandle() {
-  // window.location.href = ''
+import { searchActionCreator } from '@/store/action-creators'
+import { withRouter } from 'react-router-dom'
+
+const mapStateToProps = (state) => {
+  // console.log('map', state.getIn(['search', 'fieldList']))
+  return {
+    searchInputVal: state.getIn(['search', 'searchInputVal']),
+    fieldList: state.getIn(['search', 'fieldList'])
+  }
 }
-export default function SearchInput() {
-  // const [data, setData] = userState([])
-  // const [searchKey, searchHandle] = userState('')
-  // useEffect(() => {
-  // const featchList = async (query = '') => {
-  //   // eslint-disable-next-line no-useless-catch
-  //   try {
-  //     const data = await searchApi.featchList(query)
-  //     console.log(data)
-  //     // data && setData(data)
-  //   } catch (err) {
-  //     throw err
-  //   }
-  // }
-  // featchList(searchKey) // 我们把 query 当做参数传进去，把data和query 联动起来这样就可以达到搜索的功能啦。
-  // }, [searchKey])
-  return (
-    <div className={css['search-input-wrapper']}>
-      <Form name="search">
-        <Form.Item label="科研选题：">
-          <Search
-            placeholder="请输入检索词，简短的检索词可以找到更多信息"
-            enterButton="搜索"
-            size="large"
-            onSearch={(value) => searchHandle(value)}
-          />
-          <small>提示：未检索到相关内容，请修改检索内容再试</small>
-        </Form.Item>
-      </Form>
-    </div>
-  )
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    inputAction: bindActionCreators(searchActionCreator, dispatch)
+  }
 }
+
+@withRouter
+@connect(mapStateToProps, mapDispatchToProps)
+class SearchInput extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handelOnChange = this.handelOnChange.bind(this)
+    // this.handleClick = this.handleClick.bind(this)
+  }
+
+  handelOnChange(e) {
+    this.props.inputAction.searchInputChangeCreator(e.target.value)
+  }
+
+  render() {
+    const { searchInputVal, onSearchClick } = this.props
+    return (
+      <div className={css['search-input-wrapper']}>
+        <Form name="search">
+          <Form.Item label="科研选题：">
+            <Search
+              placeholder="请输入检索词，简短的检索词可以找到更多信息"
+              enterButton="搜索"
+              size="large"
+              ref={(ele) => {
+                this.searchInputVal = ele
+              }}
+              value={searchInputVal}
+              onSearch={onSearchClick}
+              onChange={this.handelOnChange}
+            />
+            {/* <small>{fieldList.length ? '' : '提示：未检索到相关内容，请修改检索内容再试'}</small> */}
+          </Form.Item>
+        </Form>
+      </div>
+    )
+  }
+}
+
+export default SearchInput

@@ -1,58 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import css from './index.module.less'
-import * as serviceWorker from './serviceWorker'
-import LayoutCommon from '@/layouts/common'
-import RouterArr from '@/routers'
-function About() {
-  return <h2>This is About</h2>
-}
-
+import App from '@/app'
+import { Provider } from 'react-redux'
+import store from '@/store'
 ReactDOM.render(
-  <div className={css['app-wrapper']}>
-    <Router>
-      <Switch>
-        <Route
-          path="/"
-          render={(routeProps) => (
-            <LayoutCommon {...routeProps}>
-              {/* <Switch> */}
-              {RouterArr.map((router) =>
-                router.child ? (
-                  router.child.map((item) => (
-                    <Route
-                      key={item.path}
-                      path={item.path}
-                      component={item.component}
-                      exact={item.exact}
-                    />
-                  ))
-                ) : (
-                  <Route
-                    key={router.path}
-                    path={router.path}
-                    component={router.component}
-                    exact={router.exact}
-                  />
-                )
-              )}
-              {/* </Switch> */}
-            </LayoutCommon>
-          )}
-        />
-        {/* <Route path="/search" render={(routeProps) => <routerSearch {...routeProps} />} /> */}
-        <Route path="/404">
-          <About />
-        </Route>
-        {/* <Redirect to="/404" /> */}
-      </Switch>
-    </Router>
-  </div>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 )
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()
