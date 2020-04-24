@@ -2,69 +2,44 @@ import React from 'react'
 import { Space, Divider, Menu, Dropdown, Button, Modal } from 'antd'
 import css from './index.module.less'
 import logo from './img/logo.png'
-import Cookies from 'js-cookie'
-import Urls from '@/utils/url-creator'
-
-export default class Head extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = { visible: false, token: '', userInfo: {} }
-    this.showModal = this.showModal.bind(this)
-    this.handleOk = this.handleOk.bind(this)
-    this.handleCancel = this.handleCancel.bind(this)
+// import Cookies from 'js-cookie'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { userActionCreator } from '@/store/action-creators'
+import { withRouter } from 'react-router-dom'
+const mapStateToProps = (state) => {
+  return {
+    userInfo: state.getIn(['user', 'userInfo']),
+    showLoginTips: state.getIn(['user', 'showLoginTips']),
+    showLogoutModal: state.getIn(['user', 'showLogoutModal'])
   }
+}
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    userAction: bindActionCreators(userActionCreator, dispatch)
+  }
+}
+@withRouter
+@connect(mapStateToProps, mapDispatchToProps)
+class Header extends React.Component {
   componentDidMount() {
     // 获取用户信息
-    this.setState(() => ({
-      token: Cookies.get('token')
-    }))
+    this.props.userAction.getUserInfoCreator()
   }
 
-  showModal() {
-    this.setState((state) => ({
-      visible: true
-    }))
-  }
-
-  handleOk() {
-    this.setState((state) => ({
-      visible: false
-    }))
-    // 清token退出登录
-    const token = Cookies.get('token')
-    if (token) {
-      if (Urls.domain) {
-        Cookies.remove('token', { domain: Urls.domain })
-      } else {
-        Cookies.remove('token')
-      }
-    }
-    location = '/'
-    // console.log(Urls.casLoginout + encodeURIComponent(Urls.indexUrl))
-    // window.location.href = Urls.casLoginout + encodeURIComponent(Urls.indexUrl)
-  }
-
-  handleCancel() {
-    this.setState({
-      visible: false
-    })
+  logoutModalHandleOk() {
+    // 退出登录
+    this.props.userAction.logoutActionCreator()
   }
 
   render() {
-    const menu = (
-      <Menu>
-        <Menu.Item>
-          <a target="_blank" rel="noopener noreferrer" href="http://www.sstir.cn/user">
-            用户中心
-          </a>
-        </Menu.Item>
-        <Menu.Item>
-          <span onClick={this.showModal}>退出</span>
-        </Menu.Item>
-      </Menu>
-    )
-    const { token, userInfo } = this.state
+    const {
+      showLogoutModal,
+      userAction: { showLogoutTipsToggle }
+    } = this.props
+
+    const { userInfo } = this.props
     return (
       <div className={css['header-wrapper']}>
         <img src={logo} />
@@ -73,9 +48,23 @@ export default class Head extends React.Component {
             数据中心首页
           </a>
           <Divider type="vertical" style={{ color: '#999' }} />
-          {token ? (
-            <Dropdown overlay={menu} placement="bottomRight">
-              <Button type="primary">{userInfo.userName}</Button>
+          {userInfo ? (
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item>
+                    <a target="_blank" rel="noopener noreferrer" href="http://www.sstir.cn/user">
+                      用户中心
+                    </a>
+                  </Menu.Item>
+                  <Menu.Item onClick={() => showLogoutTipsToggle(true)}>
+                    <span>退出</span>
+                  </Menu.Item>
+                </Menu>
+              }
+              placement="bottomRight"
+            >
+              <Button type="primary">{userInfo.logName}</Button>
             </Dropdown>
           ) : (
             <a href="http://www.sstir.cn/register" target="_blank">
@@ -85,9 +74,10 @@ export default class Head extends React.Component {
         </Space>
         <Modal
           title="提示"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
+          closable={false}
+          visible={showLogoutModal}
+          onOk={() => this.logoutModalHandleOk()}
+          onCancel={() => showLogoutTipsToggle(false)}
           cancelText="取消"
           okText="确定"
         >
@@ -97,3 +87,4 @@ export default class Head extends React.Component {
     )
   }
 }
+export default Header

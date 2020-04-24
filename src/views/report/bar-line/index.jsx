@@ -1,65 +1,32 @@
 import { Chart, Tooltip, Axis, Bar, Line, Point } from 'viser-react'
 import * as React from 'react'
 
-const data = [
-  { time: '10:10', call: 4, waiting: 2, people: 2 },
-  { time: '10:15', call: 2, waiting: 6, people: 3 },
-  { time: '10:20', call: 13, waiting: 2, people: 5 },
-  { time: '10:25', call: 9, waiting: 9, people: 1 },
-  { time: '10:30', call: 5, waiting: 2, people: 3 },
-  { time: '10:35', call: 8, waiting: 2, people: 1 },
-  { time: '10:40', call: 13, waiting: 1, people: 2 }
-]
-
 const scale = [
   {
-    dataKey: 'call',
+    dataKey: 'project_money',
     min: 0
   },
   {
-    dataKey: 'people',
-    min: 0
-  },
-  {
-    dataKey: 'waiting',
+    dataKey: 'count',
     min: 0
   }
 ]
 
 export default class App extends React.Component {
   render() {
+    const { data } = this.props
     return (
-      <Chart width={835} height={400} data={data} scale={scale} renderer="svg">
+      <Chart
+        width={835}
+        height={400}
+        data={data}
+        scale={scale}
+        renderer="svg"
+        padding={[20, 60, 40, 60]}
+      >
         <Tooltip />
-        {/* <Legend
-          custom
-          allowAllCanceled
-          items={[
-            { value: 'waiting', marker: { symbol: 'square', fill: '#1890ff', radius: 5 } },
-            {
-              value: 'people',
-              marker: { symbol: 'hyphen', stroke: '#fdae6b', radius: 5, lineWidth: 3 }
-            }
-          ]}
-          onClick={(ev, chart) => {
-            const item = ev.item
-            const value = item.value
-            const checked = ev.checked
-            const geoms = chart.getAllGeoms()
-            for (let i = 0; i < geoms.length; i++) {
-              const geom = geoms[i]
-              if (geom.getYScale().field === value) {
-                if (checked) {
-                  geom.show()
-                } else {
-                  geom.hide()
-                }
-              }
-            }
-          }}
-        /> */}
         <Axis
-          dataKey="people"
+          dataKey="project_money"
           grid={null}
           label={{
             textStyle: {
@@ -68,9 +35,9 @@ export default class App extends React.Component {
           }}
         />
 
-        <Bar position="time*waiting" color="#bf1a1a" />
-        <Line position="time*people" color="#555" size={1} />
-        <Point shape="circle" position="time*people" color="#555" size={2} />
+        <Bar position="key*count" color="#bf1a1a" />
+        <Line position="key*project_money" color="#555" size={1} />
+        <Point shape="circle" position="key*project_money" color="#555" size={2} />
       </Chart>
     )
   }

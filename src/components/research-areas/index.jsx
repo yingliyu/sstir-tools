@@ -24,11 +24,13 @@ const mapDispatchToProps = (dispatch) => {
 class ResearchArea extends React.Component {
   // 切换领域
   changeCurrentField(index) {
+    this.props.fieldAction.activeFieldChangeCreator(index)
+    this.props.fieldAction.activeTabBarChange(1)
+    this.props.fieldAction.currentReportChange(0)
     this.props.fieldAction.getTabContentByField()
   }
   render() {
     const { fieldList, activeField } = this.props
-
     return (
       <div className={css['field-wrapper']}>
         <span className={css['field-label']}>研究领域：</span>

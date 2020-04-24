@@ -1,70 +1,16 @@
 import { Chart, Tooltip, Axis, Interval, Coord } from 'viser-react'
-// import * as $ from 'jquery'
 import * as React from 'react'
 
-const data = [
-  {
-    type: '汽车',
-    value: 34,
-    colorType: '1'
-  },
-  {
-    type: '建材家居',
-    value: 85,
-    colorType: '2'
-  },
-  {
-    type: '住宿旅游',
-    value: 103,
-    colorType: '1'
-  },
-  {
-    type: '交通运输与仓储邮政',
-    value: 142,
-    colorType: '2'
-  },
-  {
-    type: '建筑房地产',
-    value: 251,
-    colorType: '1'
-  },
-  {
-    type: '教育',
-    value: 367,
-    colorType: '2'
-  },
-  {
-    type: 'IT 通讯电子',
-    value: 491,
-    colorType: '1'
-  },
-  {
-    type: '社会公共管理',
-    value: 672,
-    colorType: '2'
-  },
-  {
-    type: '医疗卫生',
-    value: 868,
-    colorType: '1'
-  },
-  {
-    type: '金融保险',
-    value: 1234,
-    colorType: '2'
-  }
-]
 const scale = [
   {
-    dataKey: 'value',
-    max: 1300,
+    dataKey: 'count',
     min: 0,
     nice: false
     // alias: '销量（百万）'
   }
 ]
 const label = {
-  offset: -710,
+  offset: -830,
   textStyle: {
     fill: '#8d8d8d',
     fontSize: 12,
@@ -88,7 +34,7 @@ const line = {
 //   }
 // }
 const barLabel = [
-  'value',
+  'count',
   {
     textStyle: {
       fill: '#8d8d8d'
@@ -99,7 +45,7 @@ const barLabel = [
 
 export default class App extends React.Component {
   state = {
-    // sortType: 'negative'
+    sortType: 'negative'
   }
   componentDidMount() {
     this.setStyle()
@@ -116,11 +62,11 @@ export default class App extends React.Component {
   sortData = (sortType, data) => {
     if (sortType === 'positive') {
       data.sort(function (a, b) {
-        return b.value - a.value
+        return b.count - a.count
       })
     } else {
       data.sort(function (a, b) {
-        return a.value - b.value
+        return a.count - b.count
       })
     }
     return data
@@ -152,13 +98,14 @@ export default class App extends React.Component {
     style.setAttribute('id', id)
     style.innerHTML = styleTxt
     document.getElementsByTagName('head')[0].appendChild(style)
-    // const bottomBox = document.createElement('div')
-    // bottomBox.setAttribute('class', 'bottom-tool-box')
-    // bottomBox.innerHTML = `<img class="sort-button" src="/assets/image/sortbar.png">`
-    // document.getElementsByTagName('body')[0].appendChild(bottomBox)
   }
 
   render() {
+    const { data } = this.props
+    data.forEach((item, index) => {
+      item.colorType = ((Number(index) + 1) % 2).toString()
+    })
+
     const sortType = this.state.sortType
     const trueData = this.sortData(sortType, data)
     // const color = [
@@ -173,17 +120,17 @@ export default class App extends React.Component {
         data={trueData}
         width={835}
         height={400}
-        padding={[20, 200, 50, 40]}
+        padding={[20, 300, 20, 0]}
         scale={scale}
         renderer="svg"
       >
         <Tooltip />
-        <Axis dataKey="type" label={label} tickLine={tickLine} line={line} />
-        <Axis dataKey="value" label={null} title={null} />
+        <Axis dataKey="key" label={label} tickLine={tickLine} line={line} />
+        <Axis dataKey="count" label={null} title={null} />
         <Coord type="rect" direction="LB" />
         <Interval
-          position="type*value"
-          size="26"
+          position="key*count"
+          size="22"
           opacity={1}
           label={barLabel}
           color={[

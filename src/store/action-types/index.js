@@ -1,3 +1,5 @@
-import * as search from './search'
+import * as searchActionTypes from './search'
+import * as fundActionTypes from './fund'
+import * as userActionTypes from './user'
 
-export { search as searchActionTypes }
+export { searchActionTypes, fundActionTypes, userActionTypes }

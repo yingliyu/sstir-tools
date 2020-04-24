@@ -1,3 +1,4 @@
+export const TIP_EXIST_CHANGE = 'search/tip_exist_change'
 export const SEARCH_INPUT_CHANGE = 'search/search_input_change'
 export const SHOW_NO_FIELD_TIPS_CHANGE = 'search/show_no_field_tips_change'
 

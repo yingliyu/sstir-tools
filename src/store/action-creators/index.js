@@ -1,3 +1,5 @@
-import * as search from './search'
+import * as searchActionCreator from './search'
+import * as fundActionCreator from './fund'
+import * as userActionCreator from './user'
 
-export { search as searchActionCreator }
+export { searchActionCreator, fundActionCreator, userActionCreator }

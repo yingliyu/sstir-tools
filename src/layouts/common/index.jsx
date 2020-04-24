@@ -4,6 +4,7 @@ import CommonFooter from '@/components/footer'
 import { Layout } from 'antd'
 const { Header, Footer, Content } = Layout
 import css from './index.module.less'
+
 export default function LayoutCommon(props) {
   return (
     <div className={css['layout-wrapper']}>

@@ -3,7 +3,16 @@ import { Tooltip, Space, Button } from 'antd'
 import { RollbackOutlined, ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import css from './index.module.less'
 export default function ReportHeader(props) {
-  const { curType, fieldKey, title, visualTitle, desc } = props
+  const {
+    currentReport,
+    fieldKey,
+    title,
+    visualTitle,
+    desc,
+    backClick,
+    prevClick,
+    nextClick
+  } = props
 
   return (
     <div className={css['report-header-wrapper']}>
@@ -16,15 +25,17 @@ export default function ReportHeader(props) {
           <Space>
             <Tooltip title="返回缩略图">
               <Button
-                href={`/search/field?q=${fieldKey}`}
+                onClick={backClick}
+                // href={`/search/field?q=${fieldKey}`}
                 shape="circle"
                 icon={<RollbackOutlined />}
               />
             </Tooltip>
-            {curType && curType !== '1' ? (
+            {currentReport && currentReport !== 1 ? (
               <Tooltip title="上一个可视化">
                 <Button
-                  href={`/search/field?q=${fieldKey}&type=${curType - 1}`}
+                  onClick={prevClick}
+                  // href={`/search/field?q=${fieldKey}&type=${currentReport - 1}`}
                   shape="circle"
                   icon={<ArrowLeftOutlined />}
                 />
@@ -32,10 +43,11 @@ export default function ReportHeader(props) {
             ) : (
               ''
             )}
-            {curType && curType !== '4' ? (
+            {currentReport && currentReport !== 4 ? (
               <Tooltip title="下一个可视化">
                 <Button
-                  href={`/search/field?q=${fieldKey}&type=${Number(curType) + 1}`}
+                  onClick={nextClick}
+                  // href={`/search/field?q=${fieldKey}&type=${Number(currentReport) + 1}`}
                   shape="circle"
                   icon={<ArrowRightOutlined />}
                 />

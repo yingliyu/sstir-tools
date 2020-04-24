@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import css from './index.module.less'
-// import * as serviceWorker from './serviceWorker'
 import LayoutCommon from '@/layouts/common'
 import RouterArr from '@/routers'
 

@@ -10,6 +10,6 @@ export function getFundLists(param) {
 }
 
 // 基金项目详情
-export function fundDetail(param) {
+export function getFundDetail(param) {
   return AppGet('/basic/researchAssistant/fundProjectDetail', param)
 }

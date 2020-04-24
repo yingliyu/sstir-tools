@@ -2,6 +2,7 @@ import { searchActionTypes } from '@/store/action-types'
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
+  showTips: false, // 主页的提示信息modal是否显示
   searchInputVal: '肾移植手术 气候变化',
   showNoFieldTips: false,
   fieldList: [],
@@ -18,6 +19,8 @@ export default (state = defaultState, action) => {
   switch (action.type) {
     default:
       return state
+    case searchActionTypes.TIP_EXIST_CHANGE:
+      return state.set('showTips', action.payload)
     case searchActionTypes.SEARCH_INPUT_CHANGE:
       return state.set('searchInputVal', action.payload)
     case searchActionTypes.SHOW_NO_FIELD_TIPS_CHANGE:

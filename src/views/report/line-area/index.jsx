@@ -27,8 +27,6 @@ const scale = [
 
 export default class App extends React.Component {
   render() {
-    console.log('研究走势', this.props)
-
     const { data } = this.props
     if (!data.length) {
       return null

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Tabs } from 'antd'
+import { Button, Tabs, Modal } from 'antd'
 const { TabPane } = Tabs
 import css from './index.module.less'
 import SearchInput from '@/components/search-input'
@@ -11,13 +11,12 @@ import SearchTrend from '@/views/report/line-area'
 import HighAuthor from '@/views/report/graph'
 import HighOrg from '@/views/report/bar-flat'
 import ProjectTrend from '@/views/report/bar-line'
-import store from '@/store'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { searchActionCreator } from '@/store/action-creators'
-import { withRouter } from 'react-router-dom'
-
-// import { searchApi } from '@/services'
+import { searchActionCreator, fundActionCreator, userActionCreator } from '@/store/action-creators'
+import { withRouter, Redirect } from 'react-router-dom'
+import urls from '@/utils/url-creator'
+import commLoginUtil from '../../utils/login-transfer'
 const mapStateToProps = (state) => {
   return {
     searchInputVal: state.getIn(['search', 'searchInputVal']),
@@ -28,45 +27,74 @@ const mapStateToProps = (state) => {
     researchTrendList: state.getIn(['search', 'researchTrendList']),
     highAuthorList: state.getIn(['search', 'highAuthorList']),
     highOrgList: state.getIn(['search', 'highOrgList']),
-    projectTrendList: state.getIn(['search', 'projectTrendList'])
+    projectTrendList: state.getIn(['search', 'projectTrendList']),
+    fundList: state.getIn(['fund', 'fundList']),
+    fundSortType: state.getIn(['fund', 'fundSortType']),
+    fundCurrentPage: state.getIn(['fund', 'fundCurrentPage']),
+    fundPageTotal: state.getIn(['fund', 'fundPageTotal']),
+    fundListTotal: state.getIn(['fund', 'fundListTotal']),
+    fundProjectDetail: state.getIn(['fund', 'fundProjectDetail']),
+    showLoginTips: state.getIn(['user', 'showLoginTips']),
+    userInfo: state.getIn(['user', 'userInfo'])
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    searchResultAction: bindActionCreators(searchActionCreator, dispatch)
+    searchResultAction: bindActionCreators(searchActionCreator, dispatch),
+    fundAction: bindActionCreators(fundActionCreator, dispatch),
+    userAction: bindActionCreators(userActionCreator, dispatch)
   }
 }
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class SearchReasult extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = store.getState()
-  }
-
   componentDidMount() {
-    // if (!this.props.location.state.q) {
-    //   this.props.history.push({
-    //     pathname: '/'
-    //   })
-    // }
     this.getFielList()
   }
   changeActiveTabBar(key) {
-    this.props.searchResultAction.activeTabBarChange(key)
-    this.props.searchResultAction.getTabContentByField()
+    // 查看基金项目时验证是否登录
+    if (key === 2 || key === '2') {
+      if (this.props.userInfo) {
+        this.props.fundAction.fundProjectListChangeCreator()
+        this.props.searchResultAction.activeTabBarChange(key)
+        this.props.searchResultAction.getTabContentByField()
+        this.props.searchResultAction.currentReportChange(0)
+        this.props.fundAction.fundSortTypeChangeCreator('')
+      } else {
+        this.props.userAction.showLoginTipsToggle(true)
+      }
+    } else {
+      this.props.searchResultAction.activeTabBarChange(key)
+      this.props.searchResultAction.getTabContentByField()
+      this.props.searchResultAction.currentReportChange(0)
+      this.props.fundAction.fundCurrentPageChangeCreator(1)
+    }
   }
 
   // 获取领域
   async getFielList() {
     this.props.searchResultAction.getFieldListCreator()
   }
-
-  clickReportHandle(val) {
-    console.log(val)
-
+  toggleCurrentPageHandle(val) {
+    this.props.fundAction.fundCurrentPageChange(val)
+  }
+  toggleSortTypeHandle(val) {
+    this.props.fundAction.fundSortTypeChange(val)
+  }
+  toggleReportHandle(val) {
     this.props.searchResultAction.currentReportChange(val)
+  }
+  getProjectDetail(id) {
+    this.props.fundAction.fundProjectDetailChangeCreator(id)
+  }
+  hideLoginTips() {
+    this.props.fundAction.showLoginTipsToggle(false)
+  }
+  toLogin() {
+    // 去登录
+    this.props.userAction.showLoginTipsToggle(false)
+    commLoginUtil.loginMethod()
   }
   render() {
     const {
@@ -74,27 +102,37 @@ class SearchReasult extends React.Component {
       activeField,
       activeTabBar,
       currentReport,
-      researchTrendList
-      // highAuthorList,
-      // highOrgList,
-      // projectTrendList
+      researchTrendList,
+      highAuthorList,
+      highOrgList,
+      projectTrendList,
+      fundList,
+      fundPageTotal,
+      showLoginTips,
+      userInfo,
+      userAction: { showLoginTipsToggle }
     } = this.props
-    console.log('结果也===', researchTrendList)
-    console.log('结果也===', researchTrendList.length)
+
     const fieldKey = fieldList[activeField]?.keyword
-    const researchTrendLists = researchTrendList.length ? researchTrendList : []
+    const researchTrendLists =
+      researchTrendList && researchTrendList.length ? researchTrendList : []
     return (
       <div className={css['search-list-wrapper']}>
         <div className={css['search-main-wrapper']}>
           <h2>开始测评</h2>
           <SearchInput onSearchClick={() => this.getFielList()} />
-          <ResearchAreas list={[]} name="lemonyu" />
+          <ResearchAreas list={fieldList} name="lemonyu" />
 
           <div className={css['tab-wrapper']}>
             <Tabs
               activeKey={activeTabBar.toString()}
               tabBarExtraContent={
-                <Button type="primary" shape="round">
+                <Button
+                  type="primary"
+                  shape="round"
+                  target="_blank"
+                  href={'http://www.sstir.cn/search/list?keyword=' + fieldKey}
+                >
                   论文检索
                 </Button>
               }
@@ -107,11 +145,12 @@ class SearchReasult extends React.Component {
                       return (
                         <div>
                           <ReportHeader
-                            curType="1"
+                            backClick={() => this.toggleReportHandle(0)}
+                            nextClick={() => this.toggleReportHandle(2)}
+                            currentReport={currentReport}
                             fieldKey={fieldKey}
                             title="研究走势"
                             visualTitle="历年发文量"
-                            desc={` ${fieldKey} 从1956年开始出现相关研究，2016年达到最热，至今共有2237篇相关论文。`}
                           />
                           <SearchTrend data={researchTrendLists} />
                         </div>
@@ -120,54 +159,97 @@ class SearchReasult extends React.Component {
                       return (
                         <div>
                           <ReportHeader
-                            curType="2"
+                            backClick={() => this.toggleReportHandle(0)}
+                            prevClick={() => this.toggleReportHandle(1)}
+                            nextClick={() => this.toggleReportHandle(3)}
+                            currentReport={currentReport}
                             fieldKey={fieldKey}
                             title="相关学者"
                             visualTitle="高发文作者"
-                            desc=""
                           />
-                          <HighAuthor data={[]} />
+                          <HighAuthor data={highAuthorList} fieldKey={fieldKey} />
                         </div>
                       )
                     case 3:
                       return (
                         <div>
                           <ReportHeader
-                            curType="3"
+                            backClick={() => this.toggleReportHandle(0)}
+                            prevClick={() => this.toggleReportHandle(2)}
+                            nextClick={() => this.toggleReportHandle(4)}
+                            currentReport={currentReport}
                             fieldKey={fieldKey}
                             title="高发文机构"
                             visualTitle="高发文机构及发文数量"
-                            desc=""
                           />
-                          <HighOrg data={[]} />
+                          <HighOrg data={highOrgList} />
                         </div>
                       )
                     case 4:
                       return (
                         <div>
                           <ReportHeader
-                            curType="4"
+                            backClick={() => this.toggleReportHandle(0)}
+                            prevClick={() => this.toggleReportHandle(3)}
+                            currentReport={currentReport}
                             fieldKey={fieldKey}
                             title="项目获批趋势"
                             visualTitle="项目获批数量及金额趋势"
-                            desc=""
                           />
-                          <ProjectTrend data={[]} />
+                          <ProjectTrend data={projectTrendList} />
                         </div>
                       )
                     default:
-                      return <ReportThumb fieldKey={fieldKey} />
+                      return (
+                        <ReportThumb
+                          fieldKey={fieldKey}
+                          reportClickHandle={(val) => this.toggleReportHandle(val)}
+                        />
+                      )
                   }
                 })()}
               </TabPane>
-              {/* <TabPane tab="论文" key="2">
-                Content of Tab Pane 2
-              </TabPane> */}
+
               <TabPane tab="基金项目" key="2">
-                <FoundProjects data={[]} />
+                {userInfo ? (
+                  <FoundProjects
+                    data={fundList}
+                    // sortType={fundSortType}
+                    // currentPage={fundCurrentPage}
+                    // total={fundListTotal}
+                    pageTotal={fundPageTotal}
+                    getProjectDetail={(id) => this.getProjectDetail(id)}
+                    toggleSortTypeHandle={(type) => this.toggleSortTypeHandle(type)}
+                    toggleCurrentPageHandle={(currentPage) =>
+                      this.toggleCurrentPageHandle(currentPage)
+                    }
+                  />
+                ) : (
+                  // Cookies.set('CURRENTURL', urls.indexUrl + 'user/home')
+                  // http://cas.sstir.cn/cas/login?service=http://web-ui-sstir-pre.apps.datadrivecloud.com
+                  // window.location.href = urls.casUrl + urls.indexUrl
+                  <Redirect to={urls.casUrl + urls.indexUrl} />
+                )}
               </TabPane>
             </Tabs>
           </div>
+        </div>
+
+        <div>
+          <Modal
+            title="提示"
+            closable={false}
+            visible={showLoginTips}
+            onOk={() => this.toLogin()}
+            onCancel={() => showLoginTipsToggle(false)}
+            centered="true"
+            cancelText="取消"
+            okText="去登录"
+          >
+            <p>
+              因数据统计功能消耗的计算资源较多，您需要先免费注册帐号，登录之后才能试用此项统计功能。
+            </p>
+          </Modal>
         </div>
       </div>
     )

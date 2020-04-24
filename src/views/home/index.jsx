@@ -6,10 +6,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { searchActionCreator } from '@/store/action-creators'
 import { withRouter } from 'react-router-dom'
-// import store from '@/store'
 const mapStateToProps = (state) => {
-  // console.log('map', state.getIn(['search', 'fieldList']))
   return {
+    showTips: state.getIn(['search', 'showTips']),
     searchInputVal: state.getIn(['search', 'searchInputVal'])
   }
 }
@@ -23,17 +22,6 @@ const mapDispatchToProps = (dispatch) => {
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class Home extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      visible: false
-    }
-  }
-  hideModal() {
-    this.setState((state) => ({
-      visible: false
-    }))
-  }
   searchHandle(val) {
     this.props.history.push({
       pathname: '/search/field',
@@ -41,14 +29,13 @@ class Home extends React.Component {
     })
   }
   render() {
-    console.log('home', this)
-    const { searchInputVal } = this.props
+    const {
+      showTips,
+      searchInputVal,
+      homeAction: { tipsExistChangeCreator }
+    } = this.props
     return (
       <div className={css['home-wrapper']}>
-        {/* <div className={css['banner-wrapper']}>
-          <h2>科 研 选 题 分 析 助 手 试 用 版</h2>
-          <p>收录国家自然科学基金、长三角科技部门指南政策、基金项目数据，可视化科研选题分析</p>
-        </div> */}
         <div className={css['home-main']}>
           <h2>开始测评</h2>
           <SearchInput onSearchClick={() => this.searchHandle(searchInputVal)} />
@@ -70,8 +57,7 @@ class Home extends React.Component {
         <Modal
           title="温馨提示"
           closable={false}
-          visible={this.state.visible}
-          onOk={() => this.hideModal}
+          visible={showTips}
           centered="true"
           footer={null}
           wrapClassName={css['tips-modal-wrapper']}
@@ -84,7 +70,7 @@ class Home extends React.Component {
           </p>
           <p>科研选题分析助手的结果仅供参考，本平台不承担因数据准确性引起的任何法律责任。</p>
           <div className={css['confirm-wrapper']}>
-            <Button type="primary" onClick={() => this.hideModal(false)}>
+            <Button type="primary" onClick={() => tipsExistChangeCreator(false)}>
               确认
             </Button>
           </div>

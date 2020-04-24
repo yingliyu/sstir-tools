@@ -1,6 +1,5 @@
 import { searchActionTypes } from '@/store/action-types'
 import { searchApi, reportApi } from '@/services'
-
 const searchFieldStart = () => {
   return {
     type: searchActionTypes.SEARCH_FIELD_START
@@ -26,7 +25,12 @@ const showNoFieldTipsChange = (val) => {
     payload: val
   }
 }
-
+export function tipsExistChangeCreator(val) {
+  return {
+    type: searchActionTypes.TIP_EXIST_CHANGE,
+    payload: val
+  }
+}
 export function searchInputChangeCreator(val) {
   return {
     type: searchActionTypes.SEARCH_INPUT_CHANGE,
@@ -39,7 +43,7 @@ export function getFieldListCreator() {
   return async (dispatch, getState) => {
     dispatch(searchFieldStart)
     try {
-      const list = await searchApi.extraKeywords({
+      const { data: list } = await searchApi.extraKeywords({
         q: getState().getIn(['search', 'searchInputVal'])
       })
       dispatch(searchFieldSucc(list))
@@ -68,46 +72,28 @@ const activeFieldChange = (val) => {
 export function activeFieldChangeCreator(val) {
   return async (dispatch) => {
     dispatch(activeFieldChange(val))
-    dispatch(activeTabBarChange(1))
-    dispatch(currentReportChange(0))
   }
 }
 
-// 通过领域获取可视化数据及基金项目数据
+// 通过'领域'获取可视化数据及基金项目数据
 export function getTabContentByField() {
   return async (dispatch, getState) => {
-    // dispatch(activeFieldChangeCreator(activeField))
     try {
       const activeField = getState().getIn(['search', 'activeField'])
       const fieldList = getState().getIn(['search', 'fieldList'])
       const activeFieldName = fieldList[activeField]?.keyword
       const queryParam = { q: activeFieldName }
-      const fundProjectParam = {
-        q: activeFieldName,
-        start: 0,
-        rows: 10,
-        sort: ''
-      }
-      const [
-        searchTrendList,
-        relateAuthorList,
-        highOrgList,
-        projectTrendList,
-        fundList
-      ] = await Promise.all([
+
+      const [searchTrendList, relateAuthorList, highOrgList, projectTrendList] = await Promise.all([
         reportApi.searchTrends(queryParam),
         reportApi.highAuthors(queryParam),
         reportApi.highOrgs(queryParam),
-        reportApi.projectTrends(queryParam),
-        searchApi.getFundLists(fundProjectParam)
+        reportApi.projectTrends(queryParam)
       ])
       dispatch(getResearchTrendSucc(searchTrendList.aggs))
       dispatch(getHighAuthorSucc(relateAuthorList.aggs))
       dispatch(getHighOrgSucc(highOrgList.aggs))
       dispatch(getProjectTrendSucc(projectTrendList.aggs))
-      console.log(fundList)
-
-      // console.log(searchTrendList, relateAuthorList, highOrgList, projectTrendList, fundList)
     } catch (error) {
       console.log(error)
     }

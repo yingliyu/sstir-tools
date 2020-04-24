@@ -1,4 +1,4 @@
-.founb-projects-wrapper {
+.found-projects-wrapper {
   .list-header-wrapper {
     display: flex;
     justify-content: space-between;
@@ -6,6 +6,12 @@
     p {
       display: flex;
       justify-content: center;
+      cursor: pointer;
+      .sort-type {
+        &:hover {
+          color: #1890ff;
+        }
+      }
       .sort-wrapper {
         display: flex;
         padding-right: 20px;
@@ -25,6 +31,12 @@
 
   :global .ant-pagination {
     text-align: right !important;
+  }
+  :global .ant-list-item {
+    cursor: pointer;
+    // &:hover {
+    //   background: #eee;
+    // }
   }
   .list-item-desc {
     span:nth-child(-n + 3) {

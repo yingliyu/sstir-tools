@@ -1,7 +1,6 @@
 import axios from 'axios'
 import config from '@/config'
-
-console.log(config.appConfig.baseUrl)
+import Cookies from 'js-cookie'
 
 // create axios instance
 const instance = axios.create({
@@ -39,10 +38,8 @@ instance.interceptors.request.use(
     //   background: 'rgba(0, 0, 0, 0.7)',
     //   customClass: 'loading-custom-class'
     // })
-    // const userToken = store.getters.token
-    // if (userToken) {
-    //   config.headers['authorization'] = userToken
-    // }
+    const token = Cookies.get('token')
+    config.headers['authorization'] = token ? token : ''
     // config.withCredentials = true
     return config
   },
