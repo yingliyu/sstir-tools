@@ -8,6 +8,8 @@ import { fundActionCreator } from '@/store/action-creators'
 import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state) => {
   return {
+    isLoading: state.getIn(['fund', 'isLoading']),
+    errMsg: state.getIn(['fund', 'errMsg']),
     fundList: state.getIn(['fund', 'fundList']),
     fundSortType: state.getIn(['fund', 'fundSortType']),
     fundCurrentPage: state.getIn(['fund', 'fundCurrentPage']),
@@ -26,6 +28,12 @@ const mapDispatchToProps = (dispatch) => {
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class FoundProjects extends React.Component {
+  componentDidUpdate() {
+    // const errMsg = this.props.errMsg
+    // if (errMsg) {
+    //   message.error(errMsg)
+    // }
+  }
   toggleSortTypeHandle(val) {
     if (val === 'appro_year') {
       if (this.props.fundSortType === 'appro_year asc') {
@@ -56,12 +64,13 @@ class FoundProjects extends React.Component {
     this.props.fundAction.fundProjectListChangeCreator()
   }
   render() {
-    const { fundList, fundSortType, fundCurrentPage, fundListTotal } = this.props
+    const { isLoading, fundList, fundSortType, fundCurrentPage, fundListTotal } = this.props
     return (
       <div className={css['found-projects-wrapper']}>
         <List
           itemLayout="horizontal"
           dataSource={fundList}
+          loading={isLoading}
           header={
             !fundList.length ? (
               ''

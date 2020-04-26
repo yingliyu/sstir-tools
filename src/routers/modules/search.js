@@ -12,7 +12,7 @@ const SearchDetail = Loadable({
 
 const routerSearch = [
   {
-    path: '/search/field',
+    path: '/search/field/:q',
     name: '搜索结果',
     component: Result,
     exact: true

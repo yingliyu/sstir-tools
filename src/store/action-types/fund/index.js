@@ -1,4 +1,6 @@
-export const FUND_LIST_SUCC = 'search/fund_list_succ'
+export const FUND_LIST_START = 'fund/fund_list_start'
+export const FUND_LIST_SUCC = 'fund/fund_list_succ'
+export const FUND_LIST_ERR_MSG = 'fund/fund_list_err_msg'
 export const FUND_SORT_CHANGE = 'fund/fund_sort_change'
 export const FUND_CURRENT_PAGE_CHANGE = 'found/fund_current_page_change'
 export const FUND_PAGE_TOTAL_CHANGE = 'found/fund_page_total_change'

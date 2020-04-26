@@ -34,21 +34,22 @@ class ResearchArea extends React.Component {
     return (
       <div className={css['field-wrapper']}>
         <span className={css['field-label']}>研究领域：</span>
-        <Space>
-          {fieldList.map((item, index) => (
-            <Button
-              className={index === activeField ? css['active-field'] : ''}
-              shape="round"
-              key={item.keyword}
-              onClick={() => this.changeCurrentField(index)}
-            >
-              {item.keyword}
-            </Button>
-          ))}
-          {/* <Button className={css['active-field']} shape="round" onClick={this.changeCurrentField}>
-            hahah
-          </Button> */}
-        </Space>
+        {fieldList.length ? (
+          <Space>
+            {fieldList.map((item, index) => (
+              <Button
+                className={index === activeField ? css['active-field'] : ''}
+                shape="round"
+                key={item.keyword}
+                onClick={() => this.changeCurrentField(index)}
+              >
+                {item.keyword}
+              </Button>
+            ))}
+          </Space>
+        ) : (
+          '暂无数据'
+        )}
       </div>
     )
   }

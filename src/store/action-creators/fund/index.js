@@ -15,10 +15,22 @@ const sortTypeChange = (val) => {
     payload: val
   }
 }
+// 基金项目loading
+const getFundListStart = () => {
+  return {
+    type: fundActionTypes.FUND_LIST_START
+  }
+}
 // 基金项目列表
 const getFundListSucc = (data) => {
   return {
     type: fundActionTypes.FUND_LIST_SUCC,
+    payload: data
+  }
+}
+const getFundListError = (data) => {
+  return {
+    type: fundActionTypes.FUND_LIST_ERR_MSG,
     payload: data
   }
 }
@@ -47,6 +59,7 @@ const getFundProjectDetailSucc = (val) => {
 // 获取基金项目列表
 export function fundProjectListChangeCreator() {
   return async (dispatch, getState) => {
+    dispatch(getFundListStart())
     try {
       const activeField = getState().getIn(['search', 'activeField'])
       const fieldList = getState().getIn(['search', 'fieldList'])
@@ -66,6 +79,7 @@ export function fundProjectListChangeCreator() {
       dispatch(fundProjectTotalChange(fundList.total > 100 ? 100 : fundList.total))
     } catch (error) {
       console.log(error)
+      dispatch(getFundListError(error))
     }
   }
 }

@@ -1,5 +1,6 @@
 import { searchActionTypes } from '@/store/action-types'
 import { searchApi, reportApi } from '@/services'
+import { message } from 'antd'
 const searchFieldStart = () => {
   return {
     type: searchActionTypes.SEARCH_FIELD_START
@@ -46,22 +47,24 @@ export function getFieldListCreator() {
       const { data: list } = await searchApi.extraKeywords({
         q: getState().getIn(['search', 'searchInputVal'])
       })
-      dispatch(searchFieldSucc(list))
+      if (list && list.length) {
+        dispatch(showNoFieldTipsChange(false))
+        dispatch(searchFieldSucc(list))
+      } else {
+        dispatch(showNoFieldTipsChange(true))
+      }
+
       dispatch(activeFieldChange(0))
       dispatch(activeTabBarChange(1))
       dispatch(currentReportChange(0))
       dispatch(getTabContentByField())
-      if (list.length) {
-        dispatch(showNoFieldTipsChange(false))
-      } else {
-        dispatch(showNoFieldTipsChange(true))
-      }
-    } catch (e) {
-      console.log(e)
-      dispatch(searchFieldError(e))
+    } catch (error) {
+      dispatch(searchFieldError(error))
+      message.error(error)
     }
   }
 }
+
 // 当前领域
 const activeFieldChange = (val) => {
   return {
@@ -75,9 +78,25 @@ export function activeFieldChangeCreator(val) {
   }
 }
 
+const searchReportStart = () => {
+  return {
+    type: searchActionTypes.RESEARCH_TREND_START
+  }
+}
+const searchReportError = (msg) => {
+  return {
+    type: searchActionTypes.RESEARCH_TREND_ERROR,
+    payload: msg
+  }
+}
 // 通过'领域'获取可视化数据及基金项目数据
 export function getTabContentByField() {
   return async (dispatch, getState) => {
+    dispatch(getResearchTrendSucc([]))
+    dispatch(getHighAuthorSucc([]))
+    dispatch(getHighOrgSucc([]))
+    dispatch(getProjectTrendSucc([]))
+    dispatch(searchReportStart())
     try {
       const activeField = getState().getIn(['search', 'activeField'])
       const fieldList = getState().getIn(['search', 'fieldList'])
@@ -95,7 +114,8 @@ export function getTabContentByField() {
       dispatch(getHighOrgSucc(highOrgList.aggs))
       dispatch(getProjectTrendSucc(projectTrendList.aggs))
     } catch (error) {
-      console.log(error)
+      dispatch(searchReportError(error))
+      message.error(error)
     }
   }
 }

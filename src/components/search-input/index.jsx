@@ -51,7 +51,6 @@ class SearchInput extends React.Component {
               onSearch={onSearchClick}
               onChange={this.handelOnChange}
             />
-            {/* <small>{fieldList.length ? '' : '提示：未检索到相关内容，请修改检索内容再试'}</small> */}
           </Form.Item>
         </Form>
       </div>

@@ -7,6 +7,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userActionCreator } from '@/store/action-creators'
 import { withRouter } from 'react-router-dom'
+import commLoginUtil from '@/utils/login-transfer'
+
 const mapStateToProps = (state) => {
   return {
     userInfo: state.getIn(['user', 'userInfo']),
@@ -32,7 +34,9 @@ class Header extends React.Component {
     // 退出登录
     this.props.userAction.logoutActionCreator()
   }
-
+  toLogin() {
+    commLoginUtil.loginMethod()
+  }
   render() {
     const {
       showLogoutModal,
@@ -67,7 +71,7 @@ class Header extends React.Component {
               <Button type="primary">{userInfo.logName}</Button>
             </Dropdown>
           ) : (
-            <a href="http://www.sstir.cn/register" target="_blank">
+            <a href="" target="_blank" onClick={() => this.toLogin()}>
               登录
             </a>
           )}

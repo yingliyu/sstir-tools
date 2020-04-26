@@ -2,7 +2,9 @@ import { fundActionTypes } from '@/store/action-types'
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
+  isLoading: false,
   fundList: [],
+  errMsg: '',
   fundSortType: '',
   fundCurrentPage: 1,
   fundPageTotal: 0,
@@ -15,8 +17,20 @@ export default (state = defaultState, action) => {
   switch (action.type) {
     default:
       return state
+    case fundActionTypes.FUND_LIST_START:
+      return state.set('isLoading', true)
     case fundActionTypes.FUND_LIST_SUCC:
-      return state.set('fundList', action.payload)
+      return state.merge({
+        isLoading: false,
+        errMsg: '',
+        fundList: action.payload
+      })
+    case fundActionTypes.FUND_LIST_ERR_MSG:
+      return state.merge({
+        isLoading: false,
+        errMsg: action.payload,
+        fundList: fromJS([])
+      })
     case fundActionTypes.FUND_SORT_CHANGE:
       return state.set('fundSortType', action.payload)
     case fundActionTypes.FUND_CURRENT_PAGE_CHANGE:

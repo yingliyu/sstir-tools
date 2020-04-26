@@ -24,8 +24,8 @@ const mapDispatchToProps = (dispatch) => {
 class Home extends React.Component {
   searchHandle(val) {
     this.props.history.push({
-      pathname: '/search/field',
-      state: { q: val, activeTabBar: 1 }
+      pathname: '/search/field/' + val,
+      state: { q: val }
     })
   }
   render() {

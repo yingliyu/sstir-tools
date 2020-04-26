@@ -1,18 +1,6 @@
 import { Chart, Tooltip, Axis, Area, Point, Line } from 'viser-react'
 import * as React from 'react'
-
-// const list = [
-//   { year: '1991', value: 15468 },
-//   { year: '1992', value: 16100 },
-//   { year: '1993', value: 15900 },
-//   { year: '1994', value: 17409 },
-//   { year: '1995', value: 17000 },
-//   { year: '1996', value: 31056 },
-//   { year: '1997', value: 31982 },
-//   { year: '1998', value: 32040 },
-//   { year: '1999', value: 33233 }
-// ]
-
+import Loading from '@/components/loading'
 const scale = [
   {
     dataKey: 'count'
@@ -27,10 +15,8 @@ const scale = [
 
 export default class App extends React.Component {
   render() {
-    const { data } = this.props
-    if (!data.length) {
-      return null
-    }
+    const { data, loading } = this.props
+
     const crosshairs = {
       type: 'y',
       style: {}
@@ -44,11 +30,27 @@ export default class App extends React.Component {
     const color = 'l(90) 0:#eb623d 0.5:#f09a7f 1:#fae1da'
     return (
       <Chart width={835} height={400} title="历年发文量" data={data} scale={scale} renderer="svg">
-        <Tooltip crosshairs={crosshairs} shared />
-        <Axis dataKey="count" />
-        <Line position="key*count" size={2} color="#ed7b5a" shape="smooth" />
-        <Area position="key*count" color={color} shape="smooth" />
-        <Point position="key*count" size={3} style={pointStyle} shape="circle" />
+        {(() => {
+          if (data.length) {
+            return (
+              <>
+                <Tooltip crosshairs={crosshairs} shared />
+                <Axis dataKey="count" />
+                <Line position="key*count" size={2} color="#ed7b5a" shape="smooth" />
+                <Area position="key*count" color={color} shape="smooth" />
+                <Point position="key*count" size={3} style={pointStyle} shape="circle" />
+              </>
+            )
+          } else if (loading) {
+            return (
+              <div style={{ textAlign: 'center', paddingTop: '30px' }}>
+                <Loading tip="加载中..." />
+              </div>
+            )
+          } else {
+            return <div style={{ textAlign: 'center', paddingTop: '30px' }}>暂无数据</div>
+          }
+        })()}
       </Chart>
     )
   }

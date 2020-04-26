@@ -1,10 +1,13 @@
-import { searchActionTypes } from '@/store/action-types'
+import { searchActionTypes, appActionTypes } from '@/store/action-types'
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
   showTips: false, // 主页的提示信息modal是否显示
-  searchInputVal: '肾移植手术 气候变化',
+  searchInputVal: '',
   showNoFieldTips: false,
+  isLoading: false,
+  reportLoading: false,
+  errMsg: '',
   fieldList: [],
   activeField: 0,
   activeTabBar: 1,
@@ -32,25 +35,37 @@ export default (state = defaultState, action) => {
     case searchActionTypes.SEARCH_FIELD_START:
       return state.set('isLoading', true)
     case searchActionTypes.SEARCH_FIELD_SUCC:
-      return state.set('fieldList', action.payload)
-    // return state.merge({
-    //   isLoading: false,
-    //   errMsg: '',
-    //   fieldList: fromJS(action.payload)
-    // })
+      // return state.set('fieldList', action.payload)
+      return state.merge({
+        isLoading: false,
+        errMsg: '',
+        fieldList: action.payload
+      })
     case searchActionTypes.ACTIVE_FIELD_CHANGE:
       return state.set('activeField', action.payload)
     case searchActionTypes.ACTIVE_TAB_BAR_CHANGE:
       return state.set('activeTabBar', action.payload)
-    case searchActionTypes.SEARCH_FIELD_ERROR:
+    case appActionTypes.SEARCH_FIELD_ERROR:
       return state.merge({
         isLoading: false,
         errMsg: action.payload,
-        fieldList: fromJS([])
+        fieldList: []
       })
     // 可视化list
+    case searchActionTypes.RESEARCH_TREND_START:
+      return state.set('reportLoading', true)
     case searchActionTypes.RESEARCH_TREND_SUCC:
-      return state.set('researchTrendList', action.payload)
+      return state.merge({
+        reportLoading: false,
+        errMsg: '',
+        researchTrendList: action.payload
+      })
+    case appActionTypes.RESEARCH_TREND_ERROR:
+      return state.merge({
+        reportLoading: false,
+        errMsg: action.payload,
+        researchTrendList: []
+      })
     case searchActionTypes.HIGH_AUTHOR_SUCC:
       return state.set('highAuthorList', action.payload)
     case searchActionTypes.HIGH_ORG_SUCC:
