@@ -31,7 +31,13 @@ const getFundListSucc = (data) => {
 const getFundListError = (data) => {
   return {
     type: fundActionTypes.FUND_LIST_ERR_MSG,
-    payload: data
+    errorMsg: data
+  }
+}
+const getFundDetailError = (data) => {
+  return {
+    type: fundActionTypes.FUND_LIST_ERR_MSG,
+    errorMsg: data
   }
 }
 // 基金项目总页数
@@ -56,7 +62,7 @@ const getFundProjectDetailSucc = (val) => {
     payload: val
   }
 }
-// 获取基金项目列表
+// 通过'领域'获取基金项目列表
 export function fundProjectListChangeCreator() {
   return async (dispatch, getState) => {
     dispatch(getFundListStart())
@@ -106,6 +112,7 @@ export function fundProjectDetailChangeCreator(projectId) {
       console.log(data.data[0].source)
     } catch (error) {
       console.log(error)
+      dispatch(getFundDetailError(error))
     }
   }
 }

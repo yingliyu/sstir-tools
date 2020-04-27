@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { searchActionCreator } from '@/store/action-creators'
 import { withRouter } from 'react-router-dom'
+
 const mapStateToProps = (state) => {
   return {
     showTips: state.getIn(['search', 'showTips']),

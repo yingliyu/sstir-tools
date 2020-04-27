@@ -14,8 +14,8 @@ import ProjectTrend from '@/views/report/bar-line'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { searchActionCreator, fundActionCreator, userActionCreator } from '@/store/action-creators'
-import { withRouter, Redirect } from 'react-router-dom'
-import urls from '@/utils/url-creator'
+import { withRouter } from 'react-router-dom'
+// import urls from '@/utils/url-creator'
 import commLoginUtil from '@/utils/login-transfer'
 const mapStateToProps = (state) => {
   return {
@@ -55,7 +55,6 @@ class SearchReasult extends React.Component {
     if (!this.props.searchInputVal) {
       const searchInputVal =
         this.props.match.params && this.props.match.params.q ? this.props.match.params.q : ''
-      console.log(searchInputVal)
       this.props.searchResultAction.searchInputChangeCreator(searchInputVal)
       this.getFielList(searchInputVal)
     } else {
@@ -68,7 +67,6 @@ class SearchReasult extends React.Component {
       if (this.props.userInfo) {
         this.props.fundAction.fundProjectListChangeCreator()
         this.props.searchResultAction.activeTabBarChange(key)
-        this.props.searchResultAction.getTabContentByField()
         this.props.searchResultAction.currentReportChange(0)
         this.props.fundAction.fundSortTypeChangeCreator('')
       } else {
@@ -126,7 +124,7 @@ class SearchReasult extends React.Component {
       fundList,
       fundPageTotal,
       showLoginTips,
-      userInfo,
+      // userInfo,
       userAction: { showLoginTipsToggle }
     } = this.props
     const fieldKey = fieldList[activeField]?.keyword
@@ -234,25 +232,18 @@ class SearchReasult extends React.Component {
                   </TabPane>
 
                   <TabPane tab="基金项目" key="2">
-                    {userInfo ? (
-                      <FoundProjects
-                        data={fundList}
-                        // sortType={fundSortType}
-                        // currentPage={fundCurrentPage}
-                        // total={fundListTotal}
-                        pageTotal={fundPageTotal}
-                        getProjectDetail={(id) => this.getProjectDetail(id)}
-                        toggleSortTypeHandle={(type) => this.toggleSortTypeHandle(type)}
-                        toggleCurrentPageHandle={(currentPage) =>
-                          this.toggleCurrentPageHandle(currentPage)
-                        }
-                      />
-                    ) : (
-                      // Cookies.set('CURRENTURL', urls.indexUrl + 'user/home')
-                      // http://cas.sstir.cn/cas/login?service=http://web-ui-sstir-pre.apps.datadrivecloud.com
-                      // window.location.href = urls.casUrl + urls.indexUrl
-                      <Redirect to={urls.casUrl + urls.indexUrl} />
-                    )}
+                    <FoundProjects
+                      data={fundList}
+                      // sortType={fundSortType}
+                      // currentPage={fundCurrentPage}
+                      // total={fundListTotal}
+                      pageTotal={fundPageTotal}
+                      getProjectDetail={(id) => this.getProjectDetail(id)}
+                      toggleSortTypeHandle={(type) => this.toggleSortTypeHandle(type)}
+                      toggleCurrentPageHandle={(currentPage) =>
+                        this.toggleCurrentPageHandle(currentPage)
+                      }
+                    />
                   </TabPane>
                 </Tabs>
               </div>

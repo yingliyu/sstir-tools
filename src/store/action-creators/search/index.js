@@ -1,6 +1,5 @@
 import { searchActionTypes } from '@/store/action-types'
 import { searchApi, reportApi } from '@/services'
-import { message } from 'antd'
 const searchFieldStart = () => {
   return {
     type: searchActionTypes.SEARCH_FIELD_START
@@ -16,8 +15,8 @@ const searchFieldSucc = (data) => {
 
 const searchFieldError = (msg) => {
   return {
-    type: searchActionTypes.SEARCH_FIELD_ERROR,
-    payload: msg
+    // type: searchActionTypes.SEARCH_FIELD_ERROR,
+    errorMsg: msg
   }
 }
 const showNoFieldTipsChange = (val) => {
@@ -50,17 +49,15 @@ export function getFieldListCreator() {
       if (list && list.length) {
         dispatch(showNoFieldTipsChange(false))
         dispatch(searchFieldSucc(list))
+        dispatch(getTabContentByField())
       } else {
         dispatch(showNoFieldTipsChange(true))
       }
-
-      dispatch(activeFieldChange(0))
-      dispatch(activeTabBarChange(1))
-      dispatch(currentReportChange(0))
-      dispatch(getTabContentByField())
+      // dispatch(activeFieldChange(0))
+      // dispatch(activeTabBarChange(1))
+      // dispatch(currentReportChange(0))
     } catch (error) {
       dispatch(searchFieldError(error))
-      message.error(error)
     }
   }
 }
@@ -85,17 +82,13 @@ const searchReportStart = () => {
 }
 const searchReportError = (msg) => {
   return {
-    type: searchActionTypes.RESEARCH_TREND_ERROR,
-    payload: msg
+    // type: searchActionTypes.RESEARCH_TREND_ERROR,
+    errorMsg: msg
   }
 }
-// 通过'领域'获取可视化数据及基金项目数据
+// 通过'领域'获取可视化数据
 export function getTabContentByField() {
   return async (dispatch, getState) => {
-    dispatch(getResearchTrendSucc([]))
-    dispatch(getHighAuthorSucc([]))
-    dispatch(getHighOrgSucc([]))
-    dispatch(getProjectTrendSucc([]))
     dispatch(searchReportStart())
     try {
       const activeField = getState().getIn(['search', 'activeField'])
@@ -115,7 +108,6 @@ export function getTabContentByField() {
       dispatch(getProjectTrendSucc(projectTrendList.aggs))
     } catch (error) {
       dispatch(searchReportError(error))
-      message.error(error)
     }
   }
 }
