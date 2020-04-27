@@ -1,4 +1,4 @@
-import { searchActionTypes } from '@/store/action-types'
+import { searchActionTypes, appActionTypes } from '@/store/action-types'
 import { searchApi, reportApi } from '@/services'
 const searchFieldStart = () => {
   return {
@@ -15,7 +15,7 @@ const searchFieldSucc = (data) => {
 
 const searchFieldError = (msg) => {
   return {
-    // type: searchActionTypes.SEARCH_FIELD_ERROR,
+    type: searchActionTypes.ERR_MSG_SHOW,
     errorMsg: msg
   }
 }
@@ -82,7 +82,7 @@ const searchReportStart = () => {
 }
 const searchReportError = (msg) => {
   return {
-    // type: searchActionTypes.RESEARCH_TREND_ERROR,
+    type: appActionTypes.ERR_MSG_SHOW,
     errorMsg: msg
   }
 }
@@ -108,6 +108,7 @@ export function getTabContentByField() {
       dispatch(getProjectTrendSucc(projectTrendList.aggs))
     } catch (error) {
       dispatch(searchReportError(error))
+      console.log(error)
     }
   }
 }
