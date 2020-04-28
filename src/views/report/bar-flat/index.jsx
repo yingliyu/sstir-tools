@@ -140,8 +140,8 @@ export default class App extends React.Component {
                   color={[
                     'colorType',
                     [
-                      'l(180) 0:#ec6945 0.5:#ee7f5e 1:#fae1da',
-                      'l(180) 0:#52b7d1 0.5:#6ec8db 1:#c5e7ef'
+                      'l(180) 0:#fd4c1d 0.5:#ee7f5e 1:#ffd9ce',
+                      'l(180) 0:#03b9d4 0.5:#6ec8db 1:#c5eaf2'
                     ]
                   ]}
                 />
