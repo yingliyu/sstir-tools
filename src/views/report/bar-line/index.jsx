@@ -4,10 +4,12 @@ import Loading from '@/components/loading'
 const scale = [
   {
     dataKey: 'project_money',
+    alias: '项目名称',
     min: 0
   },
   {
     dataKey: 'count',
+    alias: '项目获批数量',
     min: 0
   }
 ]
@@ -39,9 +41,9 @@ export default class App extends React.Component {
                   }}
                 />
 
-                <Bar position="key*count" color="#bf1a1a" />
-                <Line position="key*project_money" color="#555" size={1} />
-                <Point shape="circle" position="key*project_money" color="#555" size={2} />
+                <Bar position="key*count" color="l(90) 0:#2181ea 0.5:#2181ea 1:#90c0f4" />
+                <Line position="key*project_money" color="#e66919" size={1} />
+                <Point shape="circle" position="key*project_money" color="#e66919" size={2} />
               </>
             )
           } else if (loading) {

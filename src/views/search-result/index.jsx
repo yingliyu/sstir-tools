@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Tabs, Modal } from 'antd'
+import { Button, Tabs, Modal, message } from 'antd'
 const { TabPane } = Tabs
 import css from './index.module.less'
 import SearchInput from '@/components/search-input'
@@ -82,6 +82,10 @@ class SearchReasult extends React.Component {
 
   // 获取领域
   async getFielList(val) {
+    if (val.trim() === '') {
+      message.warning('请输入检索词后再试～')
+      return
+    }
     this.props.searchResultAction.getFieldListCreator()
     this.props.history.push({
       pathname: '/search/field/' + val,

@@ -6,7 +6,8 @@ const getUrl = () => {
     // development
     case 'dev':
       return {
-        indexUrl: 'http://localhost:8087/',
+        webUrl: 'http://192.168.2.114:3000',
+        indexUrl: 'http://localhost:8087',
         baseUrl: 'http://rap2.taobao.org:38080/app/mock/250859',
         casIndexUrl: 'http://10.10.11.165:8222/',
         imagesUrl: 'http://cmsimg.test.sstir.cn/sstir/',
@@ -15,6 +16,7 @@ const getUrl = () => {
     // qa
     case 'qa':
       return {
+        webUrl: '',
         indexUrl: 'http://10.10.11.165/',
         baseUrl: 'http://10.10.11.165:9999',
         casIndexUrl: 'http://10.10.11.165:8222/',
@@ -24,6 +26,7 @@ const getUrl = () => {
     // production
     case 'prod':
       return {
+        webUrl: 'http://research-ui-sstir-pre.apps.datadrivecloud.com',
         indexUrl: 'http://www.sstir.cn/',
         baseUrl: 'http://apigate.sstir.cn',
         casIndexUrl: 'http://cas.sstir.cn/',
@@ -33,6 +36,7 @@ const getUrl = () => {
       }
     case 'pre':
       return {
+        webUrl: 'http://research-ui-sstir-pre.apps.datadrivecloud.com',
         indexUrl: 'http://web-ui-sstir-pre.apps.datadrivecloud.com/',
         baseUrl: 'http://gateway-sstir-pre.apps.datadrivecloud.com',
         casIndexUrl: 'http://cas.sstir.cn/',
@@ -40,15 +44,16 @@ const getUrl = () => {
         imageUrlUUMS: 'http://cmsimg.sstir.cn/UUMS/',
         domain: '.apps.datadrivecloud.com'
       }
-    // default: prod
+    // default: pre
     default:
       return {
-        indexUrl: 'http://www.sstir.cn/',
-        baseUrl: 'http://apigate.sstir.cn',
+        webUrl: 'http://research-ui-sstir-pre.apps.datadrivecloud.com',
+        indexUrl: 'http://web-ui-sstir-pre.apps.datadrivecloud.com/',
+        baseUrl: 'http://gateway-sstir-pre.apps.datadrivecloud.com',
         casIndexUrl: 'http://cas.sstir.cn/',
         imagesUrl: 'http://cmsimg.sstir.cn/sstir/',
         imageUrlUUMS: 'http://cmsimg.sstir.cn/UUMS/',
-        domain: '.sstir.cn'
+        domain: '.apps.datadrivecloud.com'
       }
   }
 }

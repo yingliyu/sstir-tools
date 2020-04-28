@@ -68,11 +68,12 @@ export default function Graph(props) {
 
     data.forEach((item, index) => {
       item.label = item.key + '\n' + item.count
-      item.size = item.count < 50 ? 50 : item.count > 100 ? 100 : item.count + 10
+      item.size = item.count < 60 ? 60 : item.count > 100 ? 100 : item.count + 10
       item.id = `node${index + 1}`
       item.isLeaf = true
     })
-    data.push({
+    let keyData = []
+    keyData.push({
       id: 'node0',
       size: 120,
       label: fieldKey,
@@ -85,9 +86,9 @@ export default function Graph(props) {
         }
       }
     })
-
+    const graphData = data.concat(keyData)
     const dataMap = {
-      nodes: data,
+      nodes: graphData,
       edges: [
         { source: 'node0', target: 'node1' },
         { source: 'node0', target: 'node2' },

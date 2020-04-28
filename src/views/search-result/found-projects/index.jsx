@@ -138,7 +138,7 @@ class FoundProjects extends React.Component {
                   <Pagination
                     simple
                     current={fundCurrentPage}
-                    total={fundListTotal}
+                    total={fundListTotal > 100 ? 100 : fundListTotal}
                     onChange={(page) => this.toggleCurrentPageHandle(page)}
                   />
                 </div>
@@ -152,7 +152,7 @@ class FoundProjects extends React.Component {
               <Pagination
                 simple
                 current={fundCurrentPage}
-                total={fundListTotal}
+                total={fundListTotal > 100 ? 100 : fundListTotal}
                 onChange={(page) => this.toggleCurrentPageHandle(page)}
               />
             )
@@ -161,7 +161,7 @@ class FoundProjects extends React.Component {
             <List.Item>
               <List.Item.Meta
                 onClick={() => this.getProjectDetail(item.source.id)}
-                title={<a href="https://ant.design">{item.source.title}</a>}
+                title={item.source.title}
                 description={
                   <div className={css['list-item-desc']}>
                     <div className={css['item-top-wrapper']}>

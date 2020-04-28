@@ -31,10 +31,16 @@ export function logoutActionCreator() {
         }
       }
       dispatch(userInfoChangeSucc(null))
-      window.location.href = urls.casLoginout + encodeURIComponent(urls.indexUrl)
+      window.location.href = urls.casLoginout + encodeURIComponent(urls.webUrl)
     } catch (error) {
       console.log('退出失败，请重试')
+      dispatch(logoutError(error))
     }
+  }
+}
+const logoutError = (val) => {
+  return {
+    errorMsg: val
   }
 }
 

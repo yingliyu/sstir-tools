@@ -37,6 +37,9 @@ class Header extends React.Component {
   toLogin() {
     commLoginUtil.loginMethod()
   }
+  toHome() {
+    this.props.history.push('/')
+  }
   render() {
     const {
       showLogoutModal,
@@ -46,7 +49,7 @@ class Header extends React.Component {
     const { userInfo } = this.props
     return (
       <div className={css['header-wrapper']}>
-        <img src={logo} />
+        <img src={logo} onClick={() => this.toHome()} />
         <Space>
           <a href="http://www.sstir.cn" target="_blank">
             数据中心首页

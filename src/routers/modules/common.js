@@ -9,11 +9,11 @@ const NotFound = Loadable({
   loader: () => import('@/views/error-pages/not-found'),
   loading: Loading
 })
-const Demo = Loadable({
-  loader: () => import('@/views/demo'),
+// 中转页面
+const TransferPage = Loadable({
+  loader: () => import('@/views/transfer'),
   loading: Loading
 })
-
 const routerCommon = [
   {
     path: '/',
@@ -25,8 +25,10 @@ const routerCommon = [
     component: NotFound
   },
   {
-    path: '/demo',
-    component: Demo
+    path: '/transfer',
+    name: '中转页面',
+    component: TransferPage,
+    exact: true
   }
 ]
 export default routerCommon

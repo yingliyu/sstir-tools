@@ -82,7 +82,7 @@ export function fundProjectListChangeCreator() {
       const fundList = await searchApi.getFundLists(fundProjectParam)
       dispatch(getFundListSucc(fundList.data))
       dispatch(fundPageTotalChange(Math.ceil(fundList.total / 10)))
-      dispatch(fundProjectTotalChange(fundList.total > 100 ? 100 : fundList.total))
+      dispatch(fundProjectTotalChange(fundList.total))
     } catch (error) {
       console.log(error)
       dispatch(getFundListError(error))

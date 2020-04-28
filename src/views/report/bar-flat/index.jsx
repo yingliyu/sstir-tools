@@ -6,8 +6,8 @@ const scale = [
   {
     dataKey: 'count',
     min: 0,
-    nice: false
-    // alias: '销量（百万）'
+    nice: false,
+    alias: '发文数量'
   }
 ]
 const label = {
@@ -50,14 +50,6 @@ export default class App extends React.Component {
   }
   componentDidMount() {
     this.setStyle()
-    // const that = this
-    // $('.sort-button').click(function () {
-    //   const sortTypeOri = that.state.sortType
-    //   const sortType = sortTypeOri === 'positive' ? 'negative' : 'positive'
-    //   that.setState({
-    //     sortType
-    //   })
-    // })
   }
 
   sortData = (sortType, data) => {
@@ -103,9 +95,9 @@ export default class App extends React.Component {
 
   render() {
     const { data, loading } = this.props
-    data.forEach((item, index) => {
-      item.colorType = ((Number(index) + 1) % 2).toString()
-    })
+    // data.forEach((item, index) => {
+    //   item.colorType = ((Number(index) + 1) % 2).toString()
+    // })
 
     const sortType = this.state.sortType
     const trueData = this.sortData(sortType, data)
@@ -137,13 +129,7 @@ export default class App extends React.Component {
                   size="22"
                   opacity={1}
                   label={barLabel}
-                  color={[
-                    'colorType',
-                    [
-                      'l(180) 0:#fd4c1d 0.5:#ee7f5e 1:#ffd9ce',
-                      'l(180) 0:#03b9d4 0.5:#6ec8db 1:#c5eaf2'
-                    ]
-                  ]}
+                  color="l(180) 0:#2181ea 1:#90c0f4"
                 />
               </div>
             )

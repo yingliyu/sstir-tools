@@ -98,7 +98,7 @@ class fundProjectDetail extends React.Component {
           </p>
           <div className={css['summary-wrapper']}>
             <h4>基金摘要：</h4>
-            <p>{data.conclusion_abs}</p>
+            <p>{data.conclusion_abs ? data.conclusion_abs : '无'}</p>
           </div>
         </div>
       </div>

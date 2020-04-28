@@ -1,11 +1,11 @@
 import config from '@/config'
-const { indexUrl, baseUrl, casIndexUrl, imagesUrl, imageUrlUUMS, domain } = config.appConfig
+const { webUrl, indexUrl, baseUrl, casIndexUrl, imagesUrl, imageUrlUUMS, domain } = config.appConfig
 
 const casUrl = casIndexUrl + 'cas/login?service='
 const casUrl2 = indexUrl + 'cas/login?service='
 const casLoginout = casIndexUrl + 'cas/logout?backUrl='
 
-const loginUrl = baseUrl + '/basic/cas/login/transfer'
+const loginUrl = baseUrl + '/basic/cas/login/research'
 const automaticLogon = baseUrl + '/basic/cas/login/automaticLogon'
 const fileDown = baseUrl + '/basic/file/down?path='
 const editHeadImgUrl = baseUrl + '/basic/userMember/uploadHead'
@@ -40,7 +40,8 @@ const urls = {
   editHeadImgUrl,
   basedetailurl,
   automaticLogon,
-  domain
+  domain,
+  webUrl
 }
 
 export default urls

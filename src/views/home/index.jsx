@@ -1,12 +1,12 @@
 import React from 'react'
 import css from './index.module.less'
 import SearchInput from '@/components/search-input'
-import { Divider, Modal, Button } from 'antd'
+import { Divider, Modal, Button, message } from 'antd'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { searchActionCreator } from '@/store/action-creators'
 import { withRouter } from 'react-router-dom'
-
+import Cookies from 'js-cookie'
 const mapStateToProps = (state) => {
   return {
     showTips: state.getIn(['search', 'showTips']),
@@ -24,17 +24,22 @@ const mapDispatchToProps = (dispatch) => {
 @connect(mapStateToProps, mapDispatchToProps)
 class Home extends React.Component {
   searchHandle(val) {
+    if (val.trim() === '') {
+      message.warning('请输入检索词后再试～')
+      return
+    }
     this.props.history.push({
       pathname: '/search/field/' + val,
       state: { q: val }
     })
   }
+  hideHomeTips() {
+    this.props.homeAction.tipsExistChangeCreator()
+    Cookies.set('firstLook', 0)
+  }
   render() {
-    const {
-      showTips,
-      searchInputVal,
-      homeAction: { tipsExistChangeCreator }
-    } = this.props
+    const { showTips, searchInputVal } = this.props
+    const firstLook = Cookies.get('firstLook') ? Cookies.get('firstLook') : 1
     return (
       <div className={css['home-wrapper']}>
         <div className={css['home-main']}>
@@ -58,7 +63,7 @@ class Home extends React.Component {
         <Modal
           title="温馨提示"
           closable={false}
-          visible={showTips}
+          visible={showTips && firstLook === 1}
           centered="true"
           footer={null}
           wrapClassName={css['tips-modal-wrapper']}
@@ -71,7 +76,7 @@ class Home extends React.Component {
           </p>
           <p>科研选题分析助手的结果仅供参考，本平台不承担因数据准确性引起的任何法律责任。</p>
           <div className={css['confirm-wrapper']}>
-            <Button type="primary" onClick={() => tipsExistChangeCreator(false)}>
+            <Button type="primary" onClick={() => this.hideHomeTips(false)}>
               确认
             </Button>
           </div>
