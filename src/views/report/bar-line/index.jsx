@@ -18,14 +18,7 @@ export default class App extends React.Component {
   render() {
     const { data, loading } = this.props
     return (
-      <Chart
-        width={835}
-        height={400}
-        data={data}
-        scale={scale}
-        renderer="svg"
-        padding={[20, 60, 40, 60]}
-      >
+      <Chart width={835} height={400} data={data} scale={scale} padding={[20, 60, 40, 60]}>
         {(() => {
           if (data.length) {
             return (

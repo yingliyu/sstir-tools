@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import G6 from '@antv/g6'
 import Loading from '@/components/loading'
 export default function Graph(props) {
-  const { data, fieldKey, loading } = props
+  const { data, loading } = props
+  console.log(data)
+
+  const graph = useRef()
+
   useEffect(() => {
     if (data && data.length) {
       initGraph()
@@ -12,11 +16,11 @@ export default function Graph(props) {
   const initGraph = () => {
     const width = 800
     const height = 500
-    const graph = new G6.Graph({
+    graph.current = new G6.Graph({
       container: 'container',
       width,
       height,
-      renderer: 'svg',
+      // renderer: 'svg',
       groupByTypes: false,
       layout: {
         type: 'force',
@@ -66,29 +70,8 @@ export default function Graph(props) {
       }
     })
 
-    data.forEach((item, index) => {
-      item.label = item.key + '\n' + item.count
-      item.size = item.count < 60 ? 60 : item.count > 100 ? 100 : item.count + 10
-      item.id = `node${index + 1}`
-      item.isLeaf = true
-    })
-    let keyData = []
-    keyData.push({
-      id: 'node0',
-      size: 120,
-      label: fieldKey,
-      color: '#fff',
-      labelCfg: {
-        style: {
-          fontSize: '18px',
-          fontWeight: 500,
-          fill: '#fff'
-        }
-      }
-    })
-    const graphData = data.concat(keyData)
     const dataMap = {
-      nodes: graphData,
+      nodes: data,
       edges: [
         { source: 'node0', target: 'node1' },
         { source: 'node0', target: 'node2' },
@@ -104,6 +87,7 @@ export default function Graph(props) {
     }
 
     const nodes = dataMap.nodes
+
     nodes.forEach((node) => {
       if (!node.style) {
         node.style = {}
@@ -113,23 +97,23 @@ export default function Graph(props) {
         node.style.fill = '#2181ea'
       }
     })
-    graph.data({
+    graph.current.data({
       nodes,
       edges: dataMap.edges.map(function (edge, i) {
         edge.id = 'edge' + i
         return { ...edge }
       })
     })
-    graph.render()
+    graph.current.render()
 
-    graph.on('node:dragstart', function (e) {
-      graph.layout()
+    graph.current.on('node:dragstart', function (e) {
+      graph.current.layout()
       refreshDragedNodePosition(e)
     })
-    graph.on('node:drag', function (e) {
+    graph.current.on('node:drag', function (e) {
       refreshDragedNodePosition(e)
     })
-    graph.on('node:dragend', function (e) {
+    graph.current.on('node:dragend', function (e) {
       e.item.get('model').fx = null
       e.item.get('model').fy = null
     })

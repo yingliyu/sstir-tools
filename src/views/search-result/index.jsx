@@ -128,12 +128,32 @@ class SearchReasult extends React.Component {
       fundList,
       fundPageTotal,
       showLoginTips,
-      // userInfo,
       userAction: { showLoginTipsToggle }
     } = this.props
     const fieldKey = fieldList[activeField]?.keyword
-    const researchTrendLists =
-      researchTrendList && researchTrendList.length ? researchTrendList : []
+    highAuthorList.forEach((item, index) => {
+      item.label = item.key + '\n' + item.count
+      item.size = item.count < 60 ? 60 : item.count > 100 ? 100 : item.count + 10
+      item.id = `node${index + 1}`
+      item.isLeaf = true
+    })
+    const middlePoint = [
+      {
+        id: 'node0',
+        size: 120,
+        label: fieldKey,
+        color: '#fff',
+        labelCfg: {
+          style: {
+            fontSize: '18px',
+            fontWeight: 500,
+            fill: '#fff'
+          }
+        }
+      }
+    ]
+    const graphData = highAuthorList.concat(middlePoint)
+
     return (
       <div className={css['search-list-wrapper']}>
         <div className={css['search-main-wrapper']}>
@@ -172,7 +192,7 @@ class SearchReasult extends React.Component {
                                 title="研究走势"
                                 visualTitle="历年发文量"
                               />
-                              <SearchTrend data={researchTrendLists} loading={reportLoading} />
+                              <SearchTrend data={researchTrendList} loading={reportLoading} />
                             </div>
                           )
                         case 2:
@@ -187,11 +207,13 @@ class SearchReasult extends React.Component {
                                 title="相关学者"
                                 visualTitle="高发文作者"
                               />
-                              <HighAuthor
-                                data={highAuthorList}
-                                fieldKey={fieldKey}
-                                loading={reportLoading}
-                              />
+                              {highAuthorList && highAuthorList.length > 0 ? (
+                                <HighAuthor
+                                  data={graphData}
+                                  fieldKey={fieldKey}
+                                  loading={reportLoading}
+                                />
+                              ) : null}
                             </div>
                           )
                         case 3:
