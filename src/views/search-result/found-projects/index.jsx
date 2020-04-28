@@ -54,9 +54,10 @@ class FoundProjects extends React.Component {
   }
   getProjectDetail(id) {
     this.props.fundAction.fundProjectDetailChangeCreator(id)
-    this.props.history.push({
-      pathname: `/search/detail/${id}`
-    })
+    // this.props.history.push({
+    //   pathname: `/search/detail/${id}`
+    // })
+    window.open(`/search/detail/${id}`, '_blank')
   }
 
   toggleCurrentPageHandle(page) {

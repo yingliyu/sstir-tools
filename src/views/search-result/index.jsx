@@ -11,11 +11,11 @@ import SearchTrend from '@/views/report/line-area'
 import HighAuthor from '@/views/report/graph'
 import HighOrg from '@/views/report/bar-flat'
 import ProjectTrend from '@/views/report/bar-line'
+import urls from '@/utils/url-creator'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { searchActionCreator, fundActionCreator, userActionCreator } from '@/store/action-creators'
 import { withRouter } from 'react-router-dom'
-// import urls from '@/utils/url-creator'
 import commLoginUtil from '@/utils/login-transfer'
 const mapStateToProps = (state) => {
   return {
@@ -74,7 +74,7 @@ class SearchReasult extends React.Component {
       }
     } else {
       this.props.searchResultAction.activeTabBarChange(key)
-      this.props.searchResultAction.getTabContentByField()
+      // this.props.searchResultAction.getTabContentByField()
       this.props.searchResultAction.currentReportChange(0)
       this.props.fundAction.fundCurrentPageChangeCreator(1)
     }
@@ -147,7 +147,7 @@ class SearchReasult extends React.Component {
                       type="primary"
                       shape="round"
                       target="_blank"
-                      href={'http://www.sstir.cn/search/list?keyword=' + fieldKey}
+                      href={urls.indexUrl + 'search/list?keyword=' + fieldKey}
                     >
                       论文检索
                     </Button>
