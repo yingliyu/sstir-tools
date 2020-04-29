@@ -16,12 +16,23 @@ const getUrl = () => {
     // qa
     case 'qa':
       return {
+        webUrl: 'http://research-ui-sstir-pre.apps.test.datadrivecloud.com',
         indexUrl: 'http://new.test.sstir.cn/',
-        defHouUrl: 'http://apigate.test.sstir.cn',
+        baseUrl: 'http://apigate.test.sstir.cn',
         casIndexUrl: 'http://cas.test.sstir.cn/',
         imagesUrl: 'http://cmsimg.test.sstir.cn/sstir/',
         imageUrlUUMS: 'http://cmsimg.test.sstir.cn/UUMS/',
-        domain: '.sstir.cn'
+        domain: '.apps.test.datadrivecloud.com'
+      }
+    case 'pre':
+      return {
+        webUrl: 'http://research-ui-sstir-pre.apps.datadrivecloud.com',
+        indexUrl: 'http://web-ui-sstir-pre.apps.datadrivecloud.com/',
+        baseUrl: 'http://gateway-sstir-pre.apps.datadrivecloud.com',
+        casIndexUrl: 'http://cas.sstir.cn/',
+        imagesUrl: 'http://cmsimg.sstir.cn/sstir/',
+        imageUrlUUMS: 'http://cmsimg.sstir.cn/UUMS/',
+        domain: '.apps.datadrivecloud.com'
       }
     // production
     case 'prod':
@@ -34,16 +45,7 @@ const getUrl = () => {
         imageUrlUUMS: 'http://cmsimg.sstir.cn/UUMS/',
         domain: '.sstir.cn'
       }
-    case 'pre':
-      return {
-        webUrl: 'http://research-ui-sstir-pre.apps.datadrivecloud.com',
-        indexUrl: 'http://web-ui-sstir-pre.apps.datadrivecloud.com/',
-        baseUrl: 'http://gateway-sstir-pre.apps.datadrivecloud.com',
-        casIndexUrl: 'http://cas.sstir.cn/',
-        imagesUrl: 'http://cmsimg.sstir.cn/sstir/',
-        imageUrlUUMS: 'http://cmsimg.sstir.cn/UUMS/',
-        domain: '.apps.datadrivecloud.com'
-      }
+
     // default: pre
     default:
       return {

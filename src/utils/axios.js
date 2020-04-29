@@ -7,7 +7,7 @@ const instance = axios.create({
   baseURL: config.appConfig.baseUrl,
   timeout: 1000 * 60 * 10 // 10 min
 })
-
+console.log(config.appConfig.baseURL)
 // const Loading = document.querySelector('#loadingWrapper')
 
 // const showLoading = () => {
