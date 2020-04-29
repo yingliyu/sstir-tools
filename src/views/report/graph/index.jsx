@@ -2,16 +2,15 @@ import React, { useEffect, useRef } from 'react'
 import G6 from '@antv/g6'
 import Loading from '@/components/loading'
 export default function Graph(props) {
+  let graphData = []
   const { data, loading } = props
-  console.log(data)
-
+  graphData = data
   const graph = useRef()
-
   useEffect(() => {
-    if (data && data.length) {
+    if (graphData && graphData.length) {
       initGraph()
     }
-  }, [data])
+  }, [])
 
   const initGraph = () => {
     const width = 800
@@ -20,7 +19,6 @@ export default function Graph(props) {
       container: 'container',
       width,
       height,
-      // renderer: 'svg',
       groupByTypes: false,
       layout: {
         type: 'force',
@@ -30,11 +28,11 @@ export default function Graph(props) {
           if (d.source.id === 'node0') {
             return 80
           }
-          return d.size > 80 ? 80 : d.size - 10
+          return d.size > 70 ? 70 : d.size - 12
         },
         // 用于碰撞检测
         nodeSize: (d) => {
-          return d.size > 80 ? 80 : d.size - 10
+          return d.size > 70 ? 70 : d.size - 12
         },
         // 节点作用力，正数引力，负数斥力
         nodeStrength: (d) => {
@@ -69,21 +67,12 @@ export default function Graph(props) {
         color: '#e2e2e2'
       }
     })
-
+    const edges = [...Array(10).keys()].map((item, index) => {
+      return { source: 'node0', target: `node${Number(index) + 1}` }
+    })
     const dataMap = {
-      nodes: data,
-      edges: [
-        { source: 'node0', target: 'node1' },
-        { source: 'node0', target: 'node2' },
-        { source: 'node0', target: 'node3' },
-        { source: 'node0', target: 'node4' },
-        { source: 'node0', target: 'node5' },
-        { source: 'node0', target: 'node6' },
-        { source: 'node0', target: 'node7' },
-        { source: 'node0', target: 'node8' },
-        { source: 'node0', target: 'node9' },
-        { source: 'node0', target: 'node10' }
-      ]
+      nodes: graphData,
+      edges: edges
     }
 
     const nodes = dataMap.nodes
@@ -92,7 +81,6 @@ export default function Graph(props) {
       if (!node.style) {
         node.style = {}
       }
-
       if (node.id === 'node0') {
         node.style.fill = '#2181ea'
       }
@@ -104,8 +92,36 @@ export default function Graph(props) {
         return { ...edge }
       })
     })
-    graph.current.render()
 
+    graph.current.render()
+    // graph.current.on('node:mouseenter', function (e) {
+    //   console.log(e)
+    //   const model = {
+    //     id: 'node',
+    //     type: 'rect',
+    //     label: e.item.defaultCfg.model.label,
+    //     x: e.x + 60,
+    //     y: e.Y,
+    //     style: {
+    //       fill: '#fff',
+    //       borderRadius: 5
+    //     },
+    //     width: 60,
+    //     height: 30
+    //   }
+
+    //   const item = graph.current.findById('node')
+    //   if (!item) {
+    //     graph.current.addItem('node', model)
+    //   }
+    //   // graph.current.layout()
+    //   // refreshDragedNodePosition(e)
+    // })
+    // graph.current.on('node:mouseleave', function (e) {
+    //   const item = graph.current.findById('node')
+    //   console.log(item)
+    //   graph.current.removeItem(item)
+    // })
     graph.current.on('node:dragstart', function (e) {
       graph.current.layout()
       refreshDragedNodePosition(e)
@@ -124,13 +140,13 @@ export default function Graph(props) {
       model.fy = e.y
     }
   }
-
   return (
     <div>
       <div id="container">
         {(() => {
-          if (!data.length) {
+          if (!graphData.length) {
             if (loading) {
+              console.log(loading)
               return (
                 <div style={{ textAlign: 'center', paddingTop: '30px' }}>
                   <Loading tip="加载中..." />

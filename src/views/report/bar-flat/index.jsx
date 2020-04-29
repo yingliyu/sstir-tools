@@ -114,7 +114,7 @@ export default class App extends React.Component {
         height={400}
         padding={[20, 300, 20, 0]}
         scale={scale}
-        // renderer="svg"
+        renderer="svg"
       >
         {(() => {
           if (data.length) {

@@ -4,7 +4,7 @@ import Loading from '@/components/loading'
 const scale = [
   {
     dataKey: 'project_money',
-    alias: '项目名称',
+    alias: '项目获批金额',
     min: 0
   },
   {
@@ -17,6 +17,7 @@ const scale = [
 export default class App extends React.Component {
   render() {
     const { data, loading } = this.props
+
     return (
       <Chart width={835} height={400} data={data} scale={scale} padding={[20, 60, 40, 60]}>
         {(() => {

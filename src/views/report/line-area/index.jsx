@@ -27,7 +27,7 @@ export default class App extends React.Component {
         title="历年发文量"
         data={data}
         scale={scale}
-        padding={[20, 40, 30, 40]}
+        padding={[20, 40, 30, 80]}
         // renderer="svg"
       >
         {(() => {

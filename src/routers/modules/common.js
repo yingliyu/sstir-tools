@@ -25,7 +25,7 @@ const routerCommon = [
     component: NotFound
   },
   {
-    path: '/transfer',
+    path: '/transfer/page',
     name: '中转页面',
     component: TransferPage,
     exact: true

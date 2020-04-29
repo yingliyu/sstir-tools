@@ -13,10 +13,12 @@ export default class TransferPage extends React.Component {
       }
     }
     let currenturl = Cookies.get('CURRENTURL')
+    console.log(currenturl)
+
     if (currenturl) {
       window.location.href = currenturl
     } else {
-      this.props.history.push('/')
+      this.props.history.push({ pathname: '/' })
     }
   }
 

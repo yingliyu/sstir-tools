@@ -38,45 +38,45 @@ class fundProjectDetail extends React.Component {
             <li>
               <p>
                 <span>批准号：</span>
-                <span>{data.pid}</span>
+                <span>{data.pid || '无'}</span>
               </p>
               <p>
                 <span>项目负责人：</span>
-                <span>{data.leader}</span>
+                <span>{data.leader || '无'}</span>
               </p>
               <p>
                 <span>资助金额：</span>
-                <span>{data.project_money}</span>
+                <span>{data.project_money !== '' ? data.project_money + '万元' : '无'}</span>
               </p>
             </li>
 
             <li>
               <p>
                 <span>批准年度：</span>
-                <span>{data.appro_year}</span>
+                <span>{data.appro_year || '无'}</span>
               </p>
               <p>
                 <span>负责人职称：</span>
-                <span>{data.leader_title}</span>
+                <span>{data.leader_title || '无'}</span>
               </p>
               <p>
                 <span>项目类别：</span>
-                <span>{data.project_type}</span>
+                <span>{data.project_type || '无'}</span>
               </p>
             </li>
 
             <li>
               <p>
                 <span>学科分类：</span>
-                <span>{data.subj_code}</span>
+                <span>{data.subj_code || '无'}</span>
               </p>
               <p>
                 <span>依托单位：</span>
-                <span>{data.unit}</span>
+                <span>{data.unit || '无'}</span>
               </p>
               <p>
                 <span>研究期限：</span>
-                <span>{data.exec_date}</span>
+                <span>{data.exec_date || '无'}</span>
               </p>
             </li>
           </ul>
@@ -96,10 +96,14 @@ class fundProjectDetail extends React.Component {
               '无'
             )}
           </p>
-          <div className={css['summary-wrapper']}>
-            <h4>基金摘要：</h4>
-            <p>{data.conclusion_abs ? data.conclusion_abs : '无'}</p>
-          </div>
+          {data.conclusion_abs ? (
+            <div className={css['summary-wrapper']}>
+              <h4>基金摘要：</h4>
+              <p>{data.conclusion_abs}</p>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       </div>
     )

@@ -45,16 +45,31 @@
     }
   }
   .unit-wrapper {
-    width: 300px;
+    // width: 300px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
   .item-top-wrapper {
     display: flex;
     justify-content: space-between;
+    .span-item-user {
+      width: 200px;
+    }
+    .span-item-type {
+      width: 300px;
+    }
+    .span-item-year {
+      width: 150px;
+    }
+    .span-item-money {
+      width: 110px;
+    }
     span {
+      overflow: hidden;
       white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }

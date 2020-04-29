@@ -103,9 +103,19 @@ export function getTabContentByField() {
         reportApi.projectTrends(queryParam)
       ])
       dispatch(getResearchTrendSucc(searchTrendList.aggs))
-      dispatch(getHighAuthorSucc(relateAuthorList.aggs))
-      dispatch(getHighOrgSucc(highOrgList.aggs))
-      dispatch(getProjectTrendSucc(projectTrendList.aggs))
+      dispatch(getHighAuthorSucc(relateAuthorList.aggs.concat([{ key: activeFieldName }])))
+      const highOrgData = highOrgList.aggs.map((item) => ({
+        count: item.count,
+        key: item.key.length > 20 ? item.key.slice(0, 20) + '...' : item.key
+      }))
+
+      dispatch(getHighOrgSucc(highOrgData))
+      const chartData = projectTrendList.aggs.map((item) => ({
+        key: item.key,
+        count: item.count,
+        project_money: parseInt(item.project_money, 10)
+      }))
+      dispatch(getProjectTrendSucc(chartData))
     } catch (error) {
       dispatch(searchReportError(error))
       console.log(error)

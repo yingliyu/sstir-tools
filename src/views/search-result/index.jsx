@@ -132,27 +132,25 @@ class SearchReasult extends React.Component {
     } = this.props
     const fieldKey = fieldList[activeField]?.keyword
     highAuthorList.forEach((item, index) => {
-      item.label = item.key + '\n' + item.count
-      item.size = item.count < 60 ? 60 : item.count > 100 ? 100 : item.count + 10
-      item.id = `node${index + 1}`
-      item.isLeaf = true
-    })
-    const middlePoint = [
-      {
-        id: 'node0',
-        size: 120,
-        label: fieldKey,
-        color: '#fff',
-        labelCfg: {
+      if (item.key === fieldKey) {
+        item.label = fieldKey
+        item.size = 120
+        item.id = 'node0'
+        item.labelCfg = {
           style: {
-            fontSize: '18px',
+            fontSize: 18,
             fontWeight: 500,
             fill: '#fff'
           }
         }
+      } else {
+        item.label = item.key + '\n' + item.count
+        item.size = item.count < 60 ? 60 : item.count > 100 ? 100 : item.count + 10
+        item.id = `node${index + 1}`
+        item.isLeaf = true
       }
-    ]
-    const graphData = highAuthorList.concat(middlePoint)
+    })
+    const graphData = highAuthorList
 
     return (
       <div className={css['search-list-wrapper']}>
@@ -240,7 +238,7 @@ class SearchReasult extends React.Component {
                                 currentReport={currentReport}
                                 fieldKey={fieldKey}
                                 title="项目获批趋势"
-                                visualTitle="项目获批数量及金额趋势"
+                                visualTitle="项目获批数量及金额(万)趋势"
                               />
                               <ProjectTrend data={projectTrendList} loading={reportLoading} />
                             </div>

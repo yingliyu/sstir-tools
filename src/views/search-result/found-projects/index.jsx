@@ -28,12 +28,6 @@ const mapDispatchToProps = (dispatch) => {
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class FoundProjects extends React.Component {
-  componentDidUpdate() {
-    // const errMsg = this.props.errMsg
-    // if (errMsg) {
-    //   message.error(errMsg)
-    // }
-  }
   toggleSortTypeHandle(val) {
     if (val === 'appro_year') {
       if (this.props.fundSortType === 'appro_year asc') {
@@ -50,6 +44,7 @@ class FoundProjects extends React.Component {
     } else {
       this.props.fundAction.fundSortTypeChangeCreator('')
     }
+    this.props.fundAction.fundCurrentPageChangeCreator(1)
     this.props.fundAction.fundProjectListChangeCreator()
   }
   getProjectDetail(id) {
@@ -165,15 +160,31 @@ class FoundProjects extends React.Component {
                 description={
                   <div className={css['list-item-desc']}>
                     <div className={css['item-top-wrapper']}>
-                      <span>负责人：{item.source.leader}</span>
-                      <span className={css['unit-wrapper']}>申请单位：{item.source.unit}</span>
-                      <span>研究类型：{item.source.project_type}</span>
-                      <span>项目批准号：{item.source.pid}</span>
+                      <span className={css['span-item-user']}>
+                        负责人：{item.source.leader || '无'}
+                      </span>
+                      {/* <span className={css['unit-wrapper']}>
+                        申请单位：{item.source.unit || '无'}
+                      </span> */}
+                      <span className={css['span-item-type']}>
+                        研究类型：{item.source.project_type || '无'}
+                      </span>
+                      <span className={css['span-item-year']}>
+                        批准年度：{item.source.appro_year || '无'}
+                      </span>
+                      <span className={css['span-item-money']}>
+                        金额：
+                        {item.source.project_money !== '' ? item.source.project_money + '万' : '无'}
+                      </span>
+                      {/* <span>项目批准号：{item.source.pid || '无'}</span> */}
                     </div>
                     <div>
-                      <span>批准年度：{item.source.appro_year}</span>
-                      <span>金额：{item.source.project_money}万</span>
-                      <span>关键词：{item.source.keywords.map((item) => item + '；')}</span>
+                      <span>
+                        关键词：
+                        {item.source.keywords.length
+                          ? item.source.keywords.map((item) => item + '；')
+                          : '无'}
+                      </span>
                     </div>
                   </div>
                 }
