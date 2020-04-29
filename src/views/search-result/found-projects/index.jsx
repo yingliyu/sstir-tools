@@ -181,9 +181,15 @@ class FoundProjects extends React.Component {
                     <div>
                       <span>
                         关键词：
-                        {item.source.keywords.length
-                          ? item.source.keywords.map((item) => item + '；')
-                          : '无'}
+                        {item.source.keywords.length ? (
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: item.source.keywords.map((item) => `${item}&nbsp;`)
+                            }}
+                          />
+                        ) : (
+                          '无'
+                        )}
                       </span>
                     </div>
                   </div>

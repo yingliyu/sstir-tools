@@ -16,12 +16,12 @@ const getUrl = () => {
     // qa
     case 'qa':
       return {
-        webUrl: '',
-        indexUrl: 'http://10.10.11.165/',
-        baseUrl: 'http://10.10.11.165:9999',
-        casIndexUrl: 'http://10.10.11.165:8222/',
-        imagesUrl: 'http://cmsimg.test.sstir.cn:8000/sstir/',
-        imageUrlUUMS: 'http://10.10.8.40:21/UUMS/'
+        indexUrl: 'http://new.test.sstir.cn/',
+        defHouUrl: 'http://apigate.test.sstir.cn',
+        casIndexUrl: 'http://cas.test.sstir.cn/',
+        imagesUrl: 'http://cmsimg.test.sstir.cn/sstir/',
+        imageUrlUUMS: 'http://cmsimg.test.sstir.cn/UUMS/',
+        domain: '.sstir.cn'
       }
     // production
     case 'prod':

@@ -108,14 +108,7 @@ export default class App extends React.Component {
     // const color1 = 'l(180) 0:#ec6945 0.5:#f2ae99 1:#fae1da' // 橙色系
     // const color2 = 'l(180) 0:#52b7d1 0.5:#f2ae99 1:#cae8f0' // 蓝色系
     return (
-      <Chart
-        data={trueData}
-        width={835}
-        height={400}
-        padding={[20, 300, 20, 0]}
-        scale={scale}
-        renderer="svg"
-      >
+      <Chart data={trueData} width={835} height={400} padding={[20, 300, 20, 0]} scale={scale}>
         {(() => {
           if (data.length) {
             return (
