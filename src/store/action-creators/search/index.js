@@ -90,6 +90,11 @@ const searchReportError = (msg) => {
 export function getTabContentByField() {
   return async (dispatch, getState) => {
     dispatch(searchReportStart())
+    // 清空可视化数据
+    dispatch(getResearchTrendSucc([]))
+    dispatch(getHighOrgSucc([]))
+    dispatch(getProjectTrendSucc([]))
+    dispatch(getHighAuthorSucc([]))
     try {
       const activeField = getState().getIn(['search', 'activeField'])
       const fieldList = getState().getIn(['search', 'fieldList'])

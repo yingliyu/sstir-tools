@@ -68,9 +68,7 @@ class SearchReasult extends React.Component {
       this.props.fundAction.fundProjectListChangeCreator()
 
       if (this.props.showLoginTips) {
-        this.props.userAction.showLoginTipsToggle(true)
         this.props.searchResultAction.activeTabBarChange('1')
-        return false
       } else {
         this.props.searchResultAction.activeTabBarChange(key)
         this.props.searchResultAction.currentReportChange(0)
@@ -109,13 +107,15 @@ class SearchReasult extends React.Component {
     this.props.fundAction.fundProjectDetailChangeCreator(id)
   }
   hideLoginTips() {
-    this.props.fundAction.showLoginTipsToggle(false)
+    this.props.searchResultAction.activeTabBarChange('1')
+    this.props.userAction.showLoginTipsToggle(false)
   }
   toLogin() {
     // 去登录
     this.props.userAction.showLoginTipsToggle(false)
     commLoginUtil.loginMethod()
   }
+
   render() {
     const {
       searchInputVal,
@@ -131,8 +131,7 @@ class SearchReasult extends React.Component {
       projectTrendList,
       fundList,
       fundPageTotal,
-      showLoginTips,
-      userAction: { showLoginTipsToggle }
+      showLoginTips
     } = this.props
     const fieldKey = fieldList[activeField]?.keyword
     highAuthorList.forEach((item, index) => {
@@ -289,7 +288,7 @@ class SearchReasult extends React.Component {
           closable={false}
           visible={showLoginTips}
           onOk={() => this.toLogin()}
-          onCancel={() => showLoginTipsToggle(false)}
+          onCancel={() => this.hideLoginTips()}
           centered="true"
           cancelText="取消"
           okText="去登录"

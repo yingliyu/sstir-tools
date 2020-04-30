@@ -1,5 +1,4 @@
 import React from 'react'
-// import { message } from 'antd'
 import css from './index.module.less'
 import commLoginUtil from '@/utils/login-transfer'
 import { connect } from 'react-redux'
@@ -24,7 +23,6 @@ const mapDispatchToProps = (dispatch) => {
 @connect(mapStateToProps, mapDispatchToProps)
 class fundProjectDetail extends React.Component {
   componentDidMount() {
-    this.props.userAction.getUserInfoCreator()
     if (!this.props.fundProjectDetail) {
       this.getFundProjectDetail()
     }
@@ -41,15 +39,9 @@ class fundProjectDetail extends React.Component {
 
   render() {
     const data = this.props.fundProjectDetail ? this.props.fundProjectDetail : {}
-    // const {
-    //   // showLoginTips,
-    //   // userInfo
-    //   // userAction: { showLoginTipsToggle }
-    // } = this.props
     return (
       <div className={css['search-detail-wrapper']}>
-        <h2>{data.title}</h2>
-        {/* {userInfo && userInfo !== null ? ( */}
+        <h2>{data.title || '无'}</h2>
         <div className={css['detail-items-wrapper']}>
           <ul>
             <li>
@@ -128,10 +120,6 @@ class fundProjectDetail extends React.Component {
             )}
           </div>
         </div>
-        {/* // ) : (
-        //   setTimeout(() => commLoginUtil.loginMethod(), 2000)
-        // ) */}
-        {/* } */}
       </div>
     )
   }

@@ -9,7 +9,11 @@ import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state) => {
   return {
     fieldList: state.getIn(['search', 'fieldList']),
-    activeField: state.getIn(['search', 'activeField'])
+    activeField: state.getIn(['search', 'activeField']),
+    researchTrendList: state.getIn(['search', 'researchTrendList']),
+    highAuthorList: state.getIn(['search', 'highAuthorList']),
+    highOrgList: state.getIn(['search', 'highOrgList']),
+    projectTrendList: state.getIn(['search', 'projectTrendList'])
   }
 }
 

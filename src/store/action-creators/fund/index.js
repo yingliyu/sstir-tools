@@ -1,7 +1,8 @@
 import { fundActionTypes } from '@/store/action-types'
 import { searchApi } from '@/services'
 import { userActionCreator } from '@/store/action-creators'
-import commLoginUtil from '@/utils/login-transfer'
+// import commLoginUtil from '@/utils/login-transfer'
+import { message } from 'antd'
 // 基金项目当前页
 const fundCurrentPageChange = (val) => {
   return {
@@ -117,7 +118,8 @@ export function fundProjectDetailChangeCreator(projectId) {
     } catch (error) {
       console.log(error)
       if (error.includes('未登录')) {
-        commLoginUtil.loginMethod()
+        message.error('您的用户信息已过期，即将跳转至登录！')
+        // setTimeout(commLoginUtil.loginMethod(), 3000)
       }
       dispatch(getFundDetailError(error))
     }

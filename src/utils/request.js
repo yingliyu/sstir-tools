@@ -39,7 +39,7 @@ export function AppGet(url, data) {
       })
       .catch((err) => {
         console.log(err)
-
+        message.error(err, 1000)
         reject(err)
       })
   })

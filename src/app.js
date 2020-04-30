@@ -5,7 +5,6 @@ import css from './index.module.less'
 import Cookies from 'js-cookie'
 import commLoginUtil from '@/utils/login-transfer'
 import LayoutCommon from '@/layouts/common'
-// import RouterArr from '@/routers'
 import { connect } from 'react-redux'
 import Loadable from 'react-loadable'
 import Loading from '@/components/loading'
@@ -38,21 +37,17 @@ const mapStateToProps = (state) => {
   }
 }
 function PrivateRoute({ children, ...rest }) {
-  const { token } = Cookies.get('token')
-
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        token ? children : setTimeout(() => commLoginUtil.loginMethod(), 3000)
-      }
-    />
-  )
+  const noLogin = () => {
+    message.error('您的用户信息已过期，即将跳转至登录！')
+    setTimeout(() => commLoginUtil.loginMethod(), 2000)
+  }
+  const { token } = Cookies.get('token') ? Cookies.get('token') : ''
+  return <Route {...rest} render={({ location }) => (token ? children : noLogin())} />
 }
 @connect(mapStateToProps)
 class App extends React.Component {
   componentDidUpdate() {
-    if (this.props.errorMsg) {
+    if (this.props.errorMsg && !this.props.errorMsg.includes('未登录')) {
       message.error(this.props.errorMsg + '~')
     }
   }
@@ -70,11 +65,9 @@ class App extends React.Component {
               {/* 中转页 */}
               <Route path="/transfer/page" component={TransferPage} key="/transfer/page" />
               {/* 项目详情页 */}
-              <PrivateRoute
-                path="/search/detail/:projectId"
-                component={SearchDetail}
-                key="/search/detail"
-              />
+              <PrivateRoute>
+                <SearchDetail />
+              </PrivateRoute>
               {/* 404 */}
               <Route path="/404" component={NotFound} key="/404" exact={true} />
               <Redirect to="/404"> </Redirect>
