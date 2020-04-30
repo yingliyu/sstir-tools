@@ -10,6 +10,8 @@ const mapStateToProps = (state) => {
   return {
     isLoading: state.getIn(['fund', 'isLoading']),
     errMsg: state.getIn(['fund', 'errMsg']),
+    activeField: state.getIn(['search', 'activeField']),
+    fieldList: state.getIn(['search', 'fieldList']),
     fundList: state.getIn(['fund', 'fundList']),
     fundSortType: state.getIn(['fund', 'fundSortType']),
     fundCurrentPage: state.getIn(['fund', 'fundCurrentPage']),
@@ -48,10 +50,9 @@ class FoundProjects extends React.Component {
     this.props.fundAction.fundProjectListChangeCreator()
   }
   getProjectDetail(id) {
+    // const field = this.props.fieldList[this.props.activeField].keyword
     this.props.fundAction.fundProjectDetailChangeCreator(id)
-    // this.props.history.push({
-    //   pathname: `/search/detail/${id}`
-    // })
+
     window.open(`/search/detail/${id}`, '_blank')
   }
 

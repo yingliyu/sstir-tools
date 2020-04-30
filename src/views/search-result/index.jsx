@@ -31,6 +31,7 @@ const mapStateToProps = (state) => {
     highOrgList: state.getIn(['search', 'highOrgList']),
     projectTrendList: state.getIn(['search', 'projectTrendList']),
     fundList: state.getIn(['fund', 'fundList']),
+    fundListErrMsg: state.getIn(['fund', 'errMsg']),
     fundSortType: state.getIn(['fund', 'fundSortType']),
     fundCurrentPage: state.getIn(['fund', 'fundCurrentPage']),
     fundPageTotal: state.getIn(['fund', 'fundPageTotal']),
@@ -64,17 +65,20 @@ class SearchReasult extends React.Component {
   changeActiveTabBar(key) {
     // 查看基金项目时验证是否登录
     if (key === 2 || key === '2') {
-      if (this.props.userInfo) {
-        this.props.fundAction.fundProjectListChangeCreator()
+      this.props.fundAction.fundProjectListChangeCreator()
+
+      if (this.props.showLoginTips) {
+        this.props.userAction.showLoginTipsToggle(true)
+        this.props.searchResultAction.activeTabBarChange('1')
+        return false
+      } else {
         this.props.searchResultAction.activeTabBarChange(key)
         this.props.searchResultAction.currentReportChange(0)
         this.props.fundAction.fundSortTypeChangeCreator('')
-      } else {
-        this.props.userAction.showLoginTipsToggle(true)
+        this.props.fundAction.fundCurrentPageChangeCreator(1)
       }
     } else {
       this.props.searchResultAction.activeTabBarChange(key)
-      // this.props.searchResultAction.getTabContentByField()
       this.props.searchResultAction.currentReportChange(0)
       this.props.fundAction.fundCurrentPageChangeCreator(1)
     }
@@ -88,7 +92,7 @@ class SearchReasult extends React.Component {
     }
     this.props.searchResultAction.getFieldListCreator()
     this.props.history.push({
-      pathname: '/search/field/' + val,
+      pathname: `/search/field/${encodeURIComponent(val)}`,
       state: { q: val }
     })
   }
@@ -133,12 +137,13 @@ class SearchReasult extends React.Component {
     const fieldKey = fieldList[activeField]?.keyword
     highAuthorList.forEach((item, index) => {
       if (item.key === fieldKey) {
-        item.label = fieldKey
+        item.label =
+          fieldKey.length > 6 ? fieldKey.slice(0, 6) + '\n' + fieldKey.slice(6) : fieldKey
         item.size = 120
         item.id = 'node0'
         item.labelCfg = {
           style: {
-            fontSize: 18,
+            fontSize: 14,
             fontWeight: 500,
             fill: '#fff'
           }
@@ -279,22 +284,20 @@ class SearchReasult extends React.Component {
           )}
         </div>
 
-        <div>
-          <Modal
-            title="提示"
-            closable={false}
-            visible={showLoginTips}
-            onOk={() => this.toLogin()}
-            onCancel={() => showLoginTipsToggle(false)}
-            centered="true"
-            cancelText="取消"
-            okText="去登录"
-          >
-            <p>
-              因数据统计功能消耗的计算资源较多，您需要先免费注册帐号，登录之后才能试用此项统计功能。
-            </p>
-          </Modal>
-        </div>
+        <Modal
+          title="提示"
+          closable={false}
+          visible={showLoginTips}
+          onOk={() => this.toLogin()}
+          onCancel={() => showLoginTipsToggle(false)}
+          centered="true"
+          cancelText="取消"
+          okText="去登录"
+        >
+          <p>
+            因数据统计功能消耗的计算资源较多，您需要先免费注册帐号，登录之后才能试用此项统计功能。
+          </p>
+        </Modal>
       </div>
     )
   }

@@ -18,7 +18,7 @@ const routerSearch = [
     exact: true
   },
   {
-    path: '/search/detail/:projectId',
+    path: '/search/detail/:field/:projectId',
     name: '搜索详情',
     component: SearchDetail,
     exact: true

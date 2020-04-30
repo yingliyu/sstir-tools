@@ -29,7 +29,7 @@ class Home extends React.Component {
       return
     }
     this.props.history.push({
-      pathname: '/search/field/' + val,
+      pathname: `/search/field/${encodeURIComponent(val)}`,
       state: { q: val }
     })
   }

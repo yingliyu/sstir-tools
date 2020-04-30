@@ -103,7 +103,16 @@ export function getTabContentByField() {
         reportApi.projectTrends(queryParam)
       ])
       dispatch(getResearchTrendSucc(searchTrendList.aggs))
-      dispatch(getHighAuthorSucc(relateAuthorList.aggs.concat([{ key: activeFieldName }])))
+
+      dispatch(
+        getHighAuthorSucc(
+          relateAuthorList.aggs.concat([
+            {
+              key: activeFieldName
+            }
+          ])
+        )
+      )
       const highOrgData = highOrgList.aggs.map((item) => ({
         count: item.count,
         key: item.key.length > 20 ? item.key.slice(0, 20) + '...' : item.key

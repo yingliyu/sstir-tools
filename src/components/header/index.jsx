@@ -2,7 +2,7 @@ import React from 'react'
 import { Space, Divider, Menu, Dropdown, Button, Modal } from 'antd'
 import css from './index.module.less'
 import logo from './img/logo.png'
-// import Cookies from 'js-cookie'
+import urls from '@/utils/url-creator'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { userActionCreator } from '@/store/action-creators'
@@ -38,7 +38,7 @@ class Header extends React.Component {
     commLoginUtil.loginMethod()
   }
   toHome() {
-    this.props.history.push('/')
+    window.location.href = `${urls.indexUrl}`
   }
   render() {
     const {
@@ -51,7 +51,7 @@ class Header extends React.Component {
       <div className={css['header-wrapper']}>
         <img src={logo} onClick={() => this.toHome()} />
         <Space>
-          <a href="http://www.sstir.cn" target="_blank">
+          <a href={urls.indexUrl} target="_blank">
             数据中心首页
           </a>
           <Divider type="vertical" style={{ color: '#999' }} />

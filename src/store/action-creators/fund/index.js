@@ -1,6 +1,7 @@
 import { fundActionTypes } from '@/store/action-types'
 import { searchApi } from '@/services'
-
+import { userActionCreator } from '@/store/action-creators'
+import commLoginUtil from '@/utils/login-transfer'
 // 基金项目当前页
 const fundCurrentPageChange = (val) => {
   return {
@@ -86,6 +87,9 @@ export function fundProjectListChangeCreator() {
     } catch (error) {
       console.log(error)
       dispatch(getFundListError(error))
+      if (error.includes('未登录')) {
+        dispatch(userActionCreator.showLoginTipsToggle(true))
+      }
     }
   }
 }
@@ -112,6 +116,9 @@ export function fundProjectDetailChangeCreator(projectId) {
       console.log(data.data[0].source)
     } catch (error) {
       console.log(error)
+      if (error.includes('未登录')) {
+        commLoginUtil.loginMethod()
+      }
       dispatch(getFundDetailError(error))
     }
   }

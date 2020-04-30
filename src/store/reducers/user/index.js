@@ -1,7 +1,9 @@
 import { userActionTypes } from '@/store/action-types'
+import Cookies from 'js-cookie'
 import { fromJS } from 'immutable'
 
 const defaultState = fromJS({
+  token: Cookies.get('token'),
   userInfo: null,
   showLoginTips: false,
   showLogoutModal: false

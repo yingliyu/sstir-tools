@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react'
 import G6 from '@antv/g6'
 import Loading from '@/components/loading'
 export default function Graph(props) {
-  let graphData = []
   const { data, loading } = props
-  graphData = data
+  console.log(data)
+
   const graph = useRef()
   useEffect(() => {
-    if (graphData && graphData.length) {
+    if (data && data.length) {
       initGraph()
     }
   }, [])
@@ -71,7 +71,7 @@ export default function Graph(props) {
       return { source: 'node0', target: `node${Number(index) + 1}` }
     })
     const dataMap = {
-      nodes: graphData,
+      nodes: data,
       edges: edges
     }
 
@@ -94,34 +94,7 @@ export default function Graph(props) {
     })
 
     graph.current.render()
-    // graph.current.on('node:mouseenter', function (e) {
-    //   console.log(e)
-    //   const model = {
-    //     id: 'node',
-    //     type: 'rect',
-    //     label: e.item.defaultCfg.model.label,
-    //     x: e.x + 60,
-    //     y: e.Y,
-    //     style: {
-    //       fill: '#fff',
-    //       borderRadius: 5
-    //     },
-    //     width: 60,
-    //     height: 30
-    //   }
 
-    //   const item = graph.current.findById('node')
-    //   if (!item) {
-    //     graph.current.addItem('node', model)
-    //   }
-    //   // graph.current.layout()
-    //   // refreshDragedNodePosition(e)
-    // })
-    // graph.current.on('node:mouseleave', function (e) {
-    //   const item = graph.current.findById('node')
-    //   console.log(item)
-    //   graph.current.removeItem(item)
-    // })
     graph.current.on('node:dragstart', function (e) {
       graph.current.layout()
       refreshDragedNodePosition(e)
@@ -144,7 +117,7 @@ export default function Graph(props) {
     <div>
       <div id="container">
         {(() => {
-          if (!graphData.length) {
+          if (!data.length) {
             if (loading) {
               console.log(loading)
               return (

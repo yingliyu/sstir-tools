@@ -1,24 +1,30 @@
 import React from 'react'
+// import { message } from 'antd'
 import css from './index.module.less'
+import commLoginUtil from '@/utils/login-transfer'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { fundActionCreator } from '@/store/action-creators'
+import { fundActionCreator, userActionCreator } from '@/store/action-creators'
 import { withRouter } from 'react-router-dom'
 const mapStateToProps = (state) => {
   return {
-    fundProjectDetail: state.getIn(['fund', 'fundProjectDetail'])
+    fundProjectDetail: state.getIn(['fund', 'fundProjectDetail']),
+    showLoginTips: state.getIn(['user', 'showLoginTips']),
+    userInfo: state.getIn(['user', 'userInfo'])
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fundAction: bindActionCreators(fundActionCreator, dispatch)
+    fundAction: bindActionCreators(fundActionCreator, dispatch),
+    userAction: bindActionCreators(userActionCreator, dispatch)
   }
 }
 @withRouter
 @connect(mapStateToProps, mapDispatchToProps)
 class fundProjectDetail extends React.Component {
   componentDidMount() {
+    this.props.userAction.getUserInfoCreator()
     if (!this.props.fundProjectDetail) {
       this.getFundProjectDetail()
     }
@@ -27,12 +33,23 @@ class fundProjectDetail extends React.Component {
     const projectId = this.props.match.params.projectId
     this.props.fundAction.fundProjectDetailChangeCreator(projectId)
   }
+  toLogin() {
+    // 去登录
+    this.props.userAction.showLoginTipsToggle(false)
+    commLoginUtil.loginMethod()
+  }
+
   render() {
     const data = this.props.fundProjectDetail ? this.props.fundProjectDetail : {}
-
+    // const {
+    //   // showLoginTips,
+    //   // userInfo
+    //   // userAction: { showLoginTipsToggle }
+    // } = this.props
     return (
       <div className={css['search-detail-wrapper']}>
         <h2>{data.title}</h2>
+        {/* {userInfo && userInfo !== null ? ( */}
         <div className={css['detail-items-wrapper']}>
           <ul>
             <li>
@@ -46,7 +63,11 @@ class fundProjectDetail extends React.Component {
               </p>
               <p>
                 <span>资助金额：</span>
-                <span>{data.project_money !== '' ? data.project_money + '万元' : '无'}</span>
+                <span>
+                  {data.project_money && data.project_money !== ''
+                    ? data.project_money + '万元'
+                    : '无'}
+                </span>
               </p>
             </li>
 
@@ -96,15 +117,21 @@ class fundProjectDetail extends React.Component {
               '无'
             )}
           </p>
-          {data.conclusion_abs ? (
-            <div className={css['summary-wrapper']}>
-              <h4>基金摘要：</h4>
-              <p>{data.conclusion_abs}</p>
-            </div>
-          ) : (
-            ''
-          )}
+          <div className={css['summary-wrapper']}>
+            {data.conclusion_abs ? (
+              <>
+                <h4>基金摘要：</h4>
+                <p>{data.conclusion_abs}</p>
+              </>
+            ) : (
+              ''
+            )}
+          </div>
         </div>
+        {/* // ) : (
+        //   setTimeout(() => commLoginUtil.loginMethod(), 2000)
+        // ) */}
+        {/* } */}
       </div>
     )
   }
