@@ -39,14 +39,15 @@ const mapStateToProps = (state) => {
 function PrivateRoute({ children, ...rest }) {
   const noLogin = () => {
     message.error('您的用户信息已过期，即将跳转至登录！')
-    setTimeout(() => commLoginUtil.loginMethod(), 2000)
+    setTimeout(() => commLoginUtil.loginMethod(), 1000)
   }
-  const { token } = Cookies.get('token') ? Cookies.get('token') : ''
+  const token = Cookies.get('token') ? Cookies.get('token') : ''
   return <Route {...rest} render={({ location }) => (token ? children : noLogin())} />
 }
 @connect(mapStateToProps)
 class App extends React.Component {
   componentDidUpdate() {
+    console.log(this.props.errorMsg)
     if (this.props.errorMsg && !this.props.errorMsg.includes('未登录')) {
       message.error(this.props.errorMsg + '~')
     }
@@ -61,11 +62,11 @@ class App extends React.Component {
               {/* 首页 */}
               <Route path="/" component={Home} key="/home" exact={true} />
               {/* 搜索结果页 */}
-              <Route path="/search/field/:q" component={Result} key="/search/field" />
+              <Route path="/search/field" component={Result} key="/search/field" />
               {/* 中转页 */}
               <Route path="/transfer/page" component={TransferPage} key="/transfer/page" />
               {/* 项目详情页 */}
-              <PrivateRoute>
+              <PrivateRoute path="/search/detail/:projectId">
                 <SearchDetail />
               </PrivateRoute>
               {/* 404 */}

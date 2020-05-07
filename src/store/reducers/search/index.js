@@ -38,7 +38,7 @@ export default (state = defaultState, action) => {
       })
     case searchActionTypes.SEARCH_FIELD_SUCC:
       return state.merge({
-        isLoading: false,
+        isLoading: true,
         fieldList: action.payload,
         activeField: 0,
         activeTabBar: 1,
@@ -71,20 +71,8 @@ export default (state = defaultState, action) => {
       return state.set('highOrgList', action.payload)
     case searchActionTypes.PROJECT_TREND_SUCC:
       return state.merge({
-        projectTrendList: action.payload
-        // reportLoading: false
+        projectTrendList: action.payload,
+        reportLoading: false
       })
-    // case appActionTypes.SEARCH_FIELD_ERROR:
-    //   return state.merge({
-    //     isLoading: false,
-    //     errMsg: action.payload,
-    //     fieldList: []
-    //   })
-    // case appActionTypes.RESEARCH_TREND_ERROR:
-    //   return state.merge({
-    //     reportLoading: false,
-    //     errMsg: action.payload,
-    //     researchTrendList: []
-    //   })
   }
 }

@@ -5,9 +5,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { searchActionCreator } from '@/store/action-creators'
 import { withRouter } from 'react-router-dom'
+// import Loading from '@/components/loading'
 
 const mapStateToProps = (state) => {
   return {
+    isLoading: state.getIn(['search', 'isLoading']),
     fieldList: state.getIn(['search', 'fieldList']),
     activeField: state.getIn(['search', 'activeField']),
     researchTrendList: state.getIn(['search', 'researchTrendList']),
@@ -34,26 +36,32 @@ class ResearchArea extends React.Component {
     this.props.fieldAction.getTabContentByField()
   }
   render() {
-    const { fieldList, activeField } = this.props
+    const { fieldList, activeField, isLoading } = this.props
     return (
       <div className={css['field-wrapper']}>
         <span className={css['field-label']}>研究领域：</span>
-        {fieldList.length ? (
-          <Space>
-            {fieldList.map((item, index) => (
-              <Button
-                className={index === activeField ? css['active-field'] : ''}
-                shape="round"
-                key={item.keyword}
-                onClick={() => this.changeCurrentField(index)}
-              >
-                {item.keyword}
-              </Button>
-            ))}
-          </Space>
-        ) : (
-          '暂无数据'
-        )}
+        {(() => {
+          if (fieldList.length) {
+            return (
+              <Space>
+                {fieldList.map((item, index) => (
+                  <Button
+                    className={index === activeField ? css['active-field'] : ''}
+                    shape="round"
+                    key={item.keyword}
+                    onClick={() => this.changeCurrentField(index)}
+                  >
+                    {item.keyword}
+                  </Button>
+                ))}
+              </Space>
+            )
+          } else if (isLoading) {
+            return ''
+          } else {
+            return '暂无数据'
+          }
+        })()}
       </div>
     )
   }

@@ -1,23 +1,17 @@
-import { Chart, Tooltip, Axis, Bar, Line, Point } from 'viser-react'
+import { Chart, Tooltip, Axis, Bar } from 'viser-react'
 import * as React from 'react'
 import Loading from '@/components/loading'
-const scale = [
-  {
-    dataKey: 'project_money',
-    alias: '项目获批金额',
-    min: 0
-  },
-  {
-    dataKey: 'count',
-    alias: '项目获批数量',
-    min: 0
-  }
-]
 
 export default class App extends React.Component {
   render() {
-    const { data, loading } = this.props
-
+    const { data, loading, name } = this.props
+    const scale = [
+      {
+        dataKey: 'count',
+        alias: name,
+        min: 0
+      }
+    ]
     return (
       <Chart width={835} height={400} data={data} scale={scale} padding={[20, 60, 40, 60]}>
         {(() => {
@@ -26,18 +20,16 @@ export default class App extends React.Component {
               <>
                 <Tooltip />
                 <Axis
-                  dataKey="project_money"
+                  dataKey="count"
                   grid={null}
                   label={{
                     textStyle: {
-                      fill: '#fdae6b'
+                      // fill: '#2181ea'
                     }
                   }}
                 />
 
                 <Bar position="key*count" color="l(90) 0:#2181ea 0.5:#2181ea 1:#90c0f4" />
-                <Line position="key*project_money" color="#e66919" size={1} />
-                <Point shape="circle" position="key*project_money" color="#e66919" size={2} />
               </>
             )
           } else if (loading) {

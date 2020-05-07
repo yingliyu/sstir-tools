@@ -42,6 +42,9 @@ export function searchInputChangeCreator(val) {
 export function getFieldListCreator() {
   return async (dispatch, getState) => {
     dispatch(searchFieldStart)
+    dispatch(searchFieldSucc([]))
+    dispatch(searchReportStart())
+
     try {
       const { data: list } = await searchApi.extraKeywords({
         q: getState().getIn(['search', 'searchInputVal'])
@@ -53,10 +56,8 @@ export function getFieldListCreator() {
       } else {
         dispatch(showNoFieldTipsChange(true))
       }
-      // dispatch(activeFieldChange(0))
-      // dispatch(activeTabBarChange(1))
-      // dispatch(currentReportChange(0))
     } catch (error) {
+      console.log(error)
       dispatch(searchFieldError(error))
     }
   }
@@ -90,34 +91,30 @@ const searchReportError = (msg) => {
 export function getTabContentByField() {
   return async (dispatch, getState) => {
     dispatch(searchReportStart())
-    // 清空可视化数据
-    dispatch(getResearchTrendSucc([]))
-    dispatch(getHighOrgSucc([]))
-    dispatch(getProjectTrendSucc([]))
-    dispatch(getHighAuthorSucc([]))
+
     try {
       const activeField = getState().getIn(['search', 'activeField'])
       const fieldList = getState().getIn(['search', 'fieldList'])
       const activeFieldName = fieldList[activeField]?.keyword
       const queryParam = { q: activeFieldName }
 
-      const [searchTrendList, relateAuthorList, highOrgList, projectTrendList] = await Promise.all([
+      const [searchTrendList, highOrgList, projectTrendList] = await Promise.all([
         reportApi.searchTrends(queryParam),
-        reportApi.highAuthors(queryParam),
+        // reportApi.highAuthors(queryParam),
         reportApi.highOrgs(queryParam),
         reportApi.projectTrends(queryParam)
       ])
       dispatch(getResearchTrendSucc(searchTrendList.aggs))
 
-      dispatch(
-        getHighAuthorSucc(
-          relateAuthorList.aggs.concat([
-            {
-              key: activeFieldName
-            }
-          ])
-        )
-      )
+      // dispatch(
+      //   getHighAuthorSucc(
+      //     relateAuthorList.aggs.concat([
+      //       {
+      //         key: activeFieldName
+      //       }
+      //     ])
+      //   )
+      // )
       const highOrgData = highOrgList.aggs.map((item) => ({
         count: item.count,
         key: item.key.length > 20 ? item.key.slice(0, 20) + '...' : item.key
@@ -159,12 +156,12 @@ const getResearchTrendSucc = (data) => {
     payload: data
   }
 }
-const getHighAuthorSucc = (data) => {
-  return {
-    type: searchActionTypes.HIGH_AUTHOR_SUCC,
-    payload: data
-  }
-}
+// const getHighAuthorSucc = (data) => {
+//   return {
+//     type: searchActionTypes.HIGH_AUTHOR_SUCC,
+//     payload: data
+//   }
+// }
 const getHighOrgSucc = (data) => {
   return {
     type: searchActionTypes.HIGH_ORG_SUCC,

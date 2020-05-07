@@ -1,17 +1,16 @@
 import { Chart, Tooltip, Axis, Area, Point, Line } from 'viser-react'
 import * as React from 'react'
 import Loading from '@/components/loading'
-const scale = [
-  {
-    dataKey: 'count',
-    alias: '发文数量'
-    // type: 'timeCat'
-  }
-]
 
-export default class App extends React.Component {
+export default class LineChart extends React.Component {
   render() {
-    const { data, loading } = this.props
+    const { data, loading, shape, area, name } = this.props
+    const scale = [
+      {
+        dataKey: 'count',
+        alias: name
+      }
+    ]
 
     const pointStyle = {
       stroke: '#2181ea',
@@ -28,7 +27,6 @@ export default class App extends React.Component {
         data={data}
         scale={scale}
         padding={[20, 40, 30, 80]}
-        // renderer="svg"
       >
         {(() => {
           if (data.length) {
@@ -36,8 +34,8 @@ export default class App extends React.Component {
               <>
                 <Tooltip shared={false} />
                 <Axis dataKey="count" />
-                <Line position="key*count" size={2} color="#2181ea" shape="smooth" />
-                <Area position="key*count" color={color} shape="smooth" />
+                <Line position="key*count" size={2} color="#2181ea" shape={shape} />
+                {area ? <Area position="key*count" color={color} shape={shape} /> : ''}
                 <Point position="key*count" size={3} style={pointStyle} shape="circle" />
               </>
             )
