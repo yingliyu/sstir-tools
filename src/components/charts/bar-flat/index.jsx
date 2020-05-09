@@ -95,7 +95,6 @@ export default class App extends React.Component {
 
   render() {
     const { data, loading } = this.props
-    console.log(data)
     const sortType = this.state.sortType
     const trueData = this.sortData(sortType, data)
 
