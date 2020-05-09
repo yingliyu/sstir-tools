@@ -18,14 +18,14 @@ const label = {
     textAlign: 'right'
   }
 }
-const tickLine = {
-  alignWithLabel: false,
-  length: 0
-}
+// const tickLine = {
+//   alignWithLabel: false,
+//   length: 0
+// }
 
-const line = {
-  lineWidth: 0
-}
+// const line = {
+//   lineWidth: 0
+// }
 
 // const title = {
 //   offset: 30,
@@ -95,18 +95,10 @@ export default class App extends React.Component {
 
   render() {
     const { data, loading } = this.props
-    // data.forEach((item, index) => {
-    //   item.colorType = ((Number(index) + 1) % 2).toString()
-    // })
-
+    console.log(data)
     const sortType = this.state.sortType
     const trueData = this.sortData(sortType, data)
-    // const color = [
-    //   'l(180) 0:#ec6945 0.5:#f2ae99 1:#fae1da',
-    //   'l(180) 0:#52b7d1 0.5:#f2ae99 1:#cae8f0'
-    // ]
-    // const color1 = 'l(180) 0:#ec6945 0.5:#f2ae99 1:#fae1da' // 橙色系
-    // const color2 = 'l(180) 0:#52b7d1 0.5:#f2ae99 1:#cae8f0' // 蓝色系
+
     return (
       <Chart data={trueData} width={835} height={400} padding={[20, 300, 20, 0]} scale={scale}>
         {(() => {
@@ -114,7 +106,8 @@ export default class App extends React.Component {
             return (
               <div>
                 <Tooltip />
-                <Axis dataKey="key" label={label} tickLine={tickLine} line={line} />
+                {/* <Axis dataKey="key" label={label} tickLine={tickLine} line={line} /> */}
+                <Axis dataKey="key" label={label} />
                 <Axis dataKey="count" label={null} title={null} />
                 <Coord type="rect" direction="LB" />
                 <Interval

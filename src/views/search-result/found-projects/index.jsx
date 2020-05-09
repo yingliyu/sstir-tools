@@ -182,8 +182,11 @@ class FoundProjects extends React.Component {
                     <div>
                       <span>
                         关键词：
+                        {!item.source.keywords.length && !item.source.keywords_en.length
+                          ? '无'
+                          : ''}
                         {!item.source.keywords.length ? (
-                          '无'
+                          ''
                         ) : (
                           <span
                             dangerouslySetInnerHTML={{
@@ -194,7 +197,7 @@ class FoundProjects extends React.Component {
                       </span>
                       <span>
                         {!item.source.keywords_en.length ? (
-                          '无'
+                          ''
                         ) : (
                           <>
                             ,

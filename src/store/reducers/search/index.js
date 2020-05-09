@@ -38,7 +38,7 @@ export default (state = defaultState, action) => {
       })
     case searchActionTypes.SEARCH_FIELD_SUCC:
       return state.merge({
-        isLoading: true,
+        isLoading: false,
         fieldList: action.payload,
         activeField: 0,
         activeTabBar: 1,
