@@ -15,7 +15,7 @@ const searchFieldSucc = (data) => {
 
 const searchFieldError = (msg) => {
   return {
-    type: searchActionTypes.ERR_MSG_SHOW,
+    type: appActionTypes.ERR_MSG_SHOW,
     errorMsg: msg
   }
 }
