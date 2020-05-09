@@ -114,7 +114,7 @@ export function fundProjectDetailChangeCreator(projectId) {
     try {
       const data = await searchApi.getFundDetail({ q: projectId })
       dispatch(getFundProjectDetailSucc(data.data[0].source))
-      console.log(data.data[0].source)
+      // console.log(data.data[0].source)
     } catch (error) {
       console.log(error)
       // if (error.includes('未登录')) {

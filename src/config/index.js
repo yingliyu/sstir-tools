@@ -16,13 +16,13 @@ const getUrl = () => {
     // qa
     case 'qa':
       return {
-        webUrl: 'http://research-ui-sstir-pre.apps.test.datadrivecloud.com',
+        webUrl: 'http://assistant.test.sstir.cn',
         indexUrl: 'http://new.test.sstir.cn/',
         baseUrl: 'http://apigate.test.sstir.cn',
         casIndexUrl: 'http://cas.test.sstir.cn/',
         imagesUrl: 'http://cmsimg.test.sstir.cn/sstir/',
         imageUrlUUMS: 'http://cmsimg.test.sstir.cn/UUMS/',
-        domain: '.apps.test.datadrivecloud.com'
+        domain: '.test.sstir.cn'
       }
     case 'pre':
       return {
