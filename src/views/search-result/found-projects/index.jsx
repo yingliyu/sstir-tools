@@ -193,15 +193,17 @@ class FoundProjects extends React.Component {
                         )}
                       </span>
                       <span>
-                        {item.source.keywords.length ? ',' : ''}
                         {!item.source.keywords_en.length ? (
                           '无'
                         ) : (
-                          <span
-                            dangerouslySetInnerHTML={{
-                              __html: item.source.keywords_en.map((item) => `${item}&nbsp;`)
-                            }}
-                          />
+                          <>
+                            ,
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: item.source.keywords_en.map((item) => `${item}&nbsp;`)
+                              }}
+                            />
+                          </>
                         )}
                       </span>
                     </div>

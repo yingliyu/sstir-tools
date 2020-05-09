@@ -96,7 +96,12 @@ class fundProjectDetail extends React.Component {
           <p>
             <span>中文主题词：</span>
             {data.keywords && data.keywords.length ? (
-              <span>{data.keywords.map((item) => item + '；')}</span>
+              // <span>{data.keywords.map((item) => item + '；')}</span>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: data.keywords.map((item) => `${item}&nbsp;`)
+                }}
+              />
             ) : (
               '无'
             )}
@@ -104,7 +109,12 @@ class fundProjectDetail extends React.Component {
           <p>
             <span>英文主题词：</span>
             {data.keywords_en && data.keywords_en.length ? (
-              <span>{data.keywords_en.map((item) => item + '；')}</span>
+              // <span>{data.keywords_en.map((item) => item + '；')}</span>
+              <span
+                dangerouslySetInnerHTML={{
+                  __html: data.keywords_en.map((item) => `${item}&nbsp;`)
+                }}
+              />
             ) : (
               '无'
             )}

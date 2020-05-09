@@ -185,7 +185,7 @@ class SearchReasult extends React.Component {
     // })
 
     return (
-      <Spin spinning={reportLoading}>
+      <Spin spinning={reportLoading && !showNoFieldTips}>
         <div className={css['search-list-wrapper']}>
           <div className={css['search-main-wrapper']}>
             <h2>开始测评</h2>
