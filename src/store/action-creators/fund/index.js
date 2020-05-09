@@ -1,4 +1,4 @@
-import { fundActionTypes } from '@/store/action-types'
+import { fundActionTypes, appActionTypes } from '@/store/action-types'
 import { searchApi } from '@/services'
 import { userActionCreator } from '@/store/action-creators'
 // import commLoginUtil from '@/utils/login-transfer'
@@ -32,13 +32,13 @@ const getFundListSucc = (data) => {
 }
 const getFundListError = (data) => {
   return {
-    type: fundActionTypes.FUND_LIST_ERR_MSG,
+    type: appActionTypes.ERR_MSG_SHOW,
     errorMsg: data
   }
 }
 const getFundDetailError = (data) => {
   return {
-    type: fundActionTypes.FUND_LIST_ERR_MSG,
+    type: appActionTypes.ERR_MSG_SHOW,
     errorMsg: data
   }
 }
@@ -76,7 +76,7 @@ export function fundProjectListChangeCreator() {
       const fundSortType = getState().getIn(['fund', 'fundSortType'])
 
       const fundProjectParam = {
-        q: activeFieldName,
+        q: encodeURIComponent(activeFieldName),
         start: (currentPage - 1) * 10,
         rows: 10,
         sort: fundSortType

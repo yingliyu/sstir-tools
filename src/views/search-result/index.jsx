@@ -71,7 +71,7 @@ class SearchReasult extends React.Component {
    * @return {[string]}           [参数值]
    */
   getQueryValue(queryName) {
-    let query = decodeURI(window.location.search.substring(1))
+    let query = decodeURIComponent(window.location.search.substring(1))
     let vars = query.split('&')
     for (let i = 0; i < vars.length; i++) {
       let pair = vars[i].split('=')
@@ -113,7 +113,7 @@ class SearchReasult extends React.Component {
     this.props.history.push({
       pathname: `/search/field`,
       search: `?q=${encodeURIComponent(val)}`,
-      state: { q: val }
+      state: { q: encodeURIComponent(val) }
     })
   }
   toggleCurrentPageHandle(val) {

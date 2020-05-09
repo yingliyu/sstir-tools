@@ -6,7 +6,7 @@ const defaultState = fromJS({
   searchInputVal: '',
   showNoFieldTips: false,
   isLoading: false,
-  reportLoading: true,
+  reportLoading: false,
   fieldList: [],
   activeField: 0,
   activeTabBar: 1,
@@ -36,6 +36,7 @@ export default (state = defaultState, action) => {
         isLoading: true,
         fieldList: []
       })
+
     case searchActionTypes.SEARCH_FIELD_SUCC:
       return state.merge({
         isLoading: false,
@@ -57,6 +58,8 @@ export default (state = defaultState, action) => {
         highOrgList: [],
         projectTrendList: []
       })
+    case searchActionTypes.SEARCH_REPORT_ERROR:
+      return state.set('reportLoading', false)
     case searchActionTypes.RESEARCH_TREND_SUCC:
       return state.merge({
         // reportLoading: false,

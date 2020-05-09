@@ -31,11 +31,12 @@ class SearchInput extends React.Component {
   }
 
   handelOnChange(e) {
-    this.props.inputAction.searchInputChangeCreator(e.target.value)
+    this.props.inputAction.searchInputChangeCreator(encodeURIComponent(e.target.value))
   }
 
   render() {
     const { searchInputVal, onSearchClick } = this.props
+
     return (
       <div className={css['search-input-wrapper']}>
         <Form name="search">
@@ -47,7 +48,7 @@ class SearchInput extends React.Component {
               ref={(ele) => {
                 this.searchInputVal = ele
               }}
-              value={searchInputVal}
+              value={decodeURIComponent(searchInputVal)}
               onSearch={onSearchClick}
               onChange={this.handelOnChange}
             />

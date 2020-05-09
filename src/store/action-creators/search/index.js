@@ -59,6 +59,7 @@ export function getFieldListCreator() {
     } catch (error) {
       console.log(error)
       dispatch(searchFieldError(error))
+      dispatch(searchReportError(error))
     }
   }
 }
@@ -83,7 +84,7 @@ const searchReportStart = () => {
 }
 const searchReportError = (msg) => {
   return {
-    type: appActionTypes.ERR_MSG_SHOW,
+    type: searchActionTypes.SEARCH_REPORT_ERROR,
     errorMsg: msg
   }
 }
@@ -96,7 +97,7 @@ export function getTabContentByField() {
       const activeField = getState().getIn(['search', 'activeField'])
       const fieldList = getState().getIn(['search', 'fieldList'])
       const activeFieldName = fieldList[activeField]?.keyword
-      const queryParam = { q: activeFieldName }
+      const queryParam = { q: encodeURIComponent(activeFieldName) }
 
       const [searchTrendList, highOrgList, projectTrendList] = await Promise.all([
         reportApi.searchTrends(queryParam),

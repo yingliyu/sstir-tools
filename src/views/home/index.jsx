@@ -31,7 +31,7 @@ class Home extends React.Component {
     this.props.history.push({
       pathname: `/search/field`,
       search: `?q=${encodeURIComponent(val)}`,
-      state: { q: val }
+      state: { q: encodeURIComponent(val) }
     })
   }
   hideHomeTips() {

@@ -11,6 +11,7 @@ export const ACTIVE_TAB_BAR_CHANGE = 'search/active_tab_bar_change'
 export const CURRENT_REPORT_CHANGE = 'search/current_report_change'
 
 export const RESEARCH_TREND_START = 'search/research_trend_start'
+export const SEARCH_REPORT_ERROR = 'search/search_report_error'
 export const RESEARCH_TREND_SUCC = 'search/research_trend_succ'
 export const RESEARCH_TREND_ERROR = 'search/research_trend_error'
 export const HIGH_AUTHOR_SUCC = 'search/high_author_succ'
