@@ -37,7 +37,7 @@ const getUrl = () => {
     // production
     case 'prod':
       return {
-        webUrl: 'http://research-ui-sstir-pre.apps.datadrivecloud.com',
+        webUrl: 'http://assistant.sstir.cn',
         indexUrl: 'http://www.sstir.cn/',
         baseUrl: 'http://apigate.sstir.cn',
         casIndexUrl: 'http://cas.sstir.cn/',

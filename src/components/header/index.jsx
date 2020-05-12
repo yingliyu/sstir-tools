@@ -60,7 +60,7 @@ class Header extends React.Component {
               overlay={
                 <Menu>
                   <Menu.Item>
-                    <a target="_blank" rel="noopener noreferrer" href={urls.indexUrl + '/user'}>
+                    <a target="_blank" rel="noopener noreferrer" href={urls.indexUrl + 'user'}>
                       用户中心
                     </a>
                   </Menu.Item>
