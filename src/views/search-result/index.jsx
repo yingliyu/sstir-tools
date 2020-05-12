@@ -202,7 +202,7 @@ class SearchReasult extends React.Component {
                         type="primary"
                         shape="round"
                         target="_blank"
-                        href={urls.indexUrl + 'search/list?keyword=' + fieldKey}
+                        href={urls.indexUrl + 'search/list?keyword=' + encodeURIComponent(fieldKey)}
                       >
                         论文检索
                       </Button>
